@@ -1,0 +1,103 @@
+//? Autoincrement config
+use("incidencias");
+db.createCollection("counters");
+db.counters.insertMany([
+    { counter: "trainersId", sequenceValue: 0 }
+]);
+
+const autoIncrement = (collection) => {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+       { counter: `${collection}Id`},
+       { $inc: { sequenceValue: 1 }},
+       { returnDocument: "after" }
+    )
+    return sequenceDocument.sequenceValue;
+}
+
+//? Trainers
+use("incidencias");
+db.createCollection("trainers", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "cc", "nombreCompleto", "emailPersonal", "emailComporativo", "telMovil", "telMovilEmpresa"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "number",
+                },
+                cc: {
+                    bsonType: "int", 
+                    description: "cc is required. Must be a number"
+                },
+                nombreCompleto: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "nombreCompleto is required. Must be a string"
+                },
+                emailPersonal: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+                    description: "emailPersonal is required. Must be string with a similar pattern: example@gmail.com"
+                },
+                emailComporativo: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+                    description: "emailComporativo is required. Must be string with a similar pattern: example@gmail.com"
+                },
+                telMovil: {
+                    bsonType: "string",
+                    pattern: "^[0-9]+$",
+                    description: "telMovil is required. Must be a string"
+                },
+                telMovilEmpresa: {
+                    bsonType: "string",
+                    pattern: "^[0-9]+$",
+                    description: "telMovilEmpresa is required. Must be a string"
+                }
+            }
+        }
+    }
+});
+db.trainers.insertMany([
+    {
+        id: autoIncrement("trainers"),
+        cc: 123456,
+        nombreCompleto: "Miguel Angel",
+        emailPersonal: "miguel@gmail.com",
+        emailComporativo: "miguelCorp@gmail.com",
+        telMovil: "123456",
+        telMovilEmpresa: "123456"
+    },
+    {
+        id: autoIncrement("trainers"),
+        cc: 123457,
+        nombreCompleto: "Juan Pablo",
+        emailPersonal: "juan@gmail.com",
+        emailComporativo: "juanCorp@gmail.com",
+        telMovil: "347815",
+        telMovilEmpresa: "787818"
+    },
+    {
+        id: autoIncrement("trainers"),
+        cc: 123458,
+        nombreCompleto: "Maria Angelina",
+        emailPersonal: "maria@gmail.com",
+        emailComporativo: "mariaCorp@gmail.com",
+        telMovil: "877841",
+        telMovilEmpresa: "157775"
+    },
+    {
+        id: autoIncrement("trainers"),
+        cc: 123459,
+        nombreCompleto: "Sara Maria",
+        emailPersonal: "sara@gmail.com",
+        emailComporativo: "saraCorp@gmail.com",
+        telMovil: "8796785",
+        telMovilEmpresa: "5478872"
+    }
+])
+
