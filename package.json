@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "nodemon --quiet index.js",
+    "start": "nodemon --quiet ./api/index.js",
     "build": "vite build",
     "preview": "vite preview"
   },
