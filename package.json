@@ -5,13 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "nodemon --quiet index.js",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "express-rate-limit": "7.0.1",
+    "express-routes-versioning": "1.0.1",
+    "express-validator": "7.0.1",
+    "jose": "4.14.6",
+    "mongodb": "6.1.0",
+    "passport": "0.6.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "6.16.0",
+    "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -21,6 +32,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "nodemon": "3.0.1",
     "vite": "^4.4.5"
   }
 }
