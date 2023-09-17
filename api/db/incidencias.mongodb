@@ -2,7 +2,27 @@
 use("incidencias");
 db.createCollection("counters");
 db.counters.insertMany([
-    { counter: "trainersId", sequenceValue: 0 }
+    { counter: "incidencesId", sequenceValue: 0 },
+    { counter: "incidenceCategoryId", sequenceValue: 0 },
+    { counter: "statusId", sequenceValue: 0 },
+    { counter: "priorityId", sequenceValue: 0 },
+    { counter: "placeId", sequenceValue: 0 },
+    { counter: "areaId", sequenceValue: 0 },
+    { counter: "userId", sequenceValue: 0 },
+    { counter: "roleId", sequenceValue: 0 },
+    { counter: "personId", sequenceValue: 0 },
+    { counter: "personTypeId", sequenceValue: 0 },
+    { counter: "documentTypeId", sequenceValue: 0 },
+    { counter: "genderId", sequenceValue: 0 },
+    { counter: "cityId", sequenceValue: 0 },
+    { counter: "countryId", sequenceValue: 0 },
+    { counter: "trainerClassRoomId", sequenceValue: 0 },
+    { counter: "tuitionId", sequenceValue: 0 },
+    { counter: "teamId", sequenceValue: 0 },
+    { counter: "addressId", sequenceValue: 0 },
+    { counter: "contactId", sequenceValue: 0 },
+    { counter: "contactTypeId", sequenceValue: 0 },
+
 ]);
 
 const autoIncrement = (collection) => {
@@ -14,90 +34,758 @@ const autoIncrement = (collection) => {
     return sequenceDocument.sequenceValue;
 }
 
-//? Trainers
 use("incidencias");
-db.createCollection("trainers", {
+//? Incidences
+db.createCollection("incidences", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "cc", "nombreCompleto", "emailPersonal", "emailComporativo", "telMovil", "telMovilEmpresa"],
+            required: ["id", "id_user", "id_place", "id_status", "id_priority", "id_category", "date", "description"],
             properties: {
                 _id: {
                     bsonType: "objectId"
                 },
                 id: {
-                    bsonType: "number",
+                    bsonType: "int",
                 },
-                cc: {
-                    bsonType: "int", 
-                    description: "cc is required. Must be a number"
+                id_user: {
+                    bsonType: "int",
+                    description: "trainersId is required. Must be a int"
                 },
-                nombreCompleto: {
+                id_place: {
+                    bsonType: "date",
+                    description: "fecha is required. Must be a date"
+                },
+                id_status: {
+                    bsonType: "string",
+                    pattern: "^[0-9]+$",
+                    description: "hora is required. Must be a string"
+                },
+                id_priority: {
+                    bsonType: "string",
+                    description: "descripcion is required. Must be a string"
+                },
+                id_category: {
+                    bsonType: "string",
+                    description: "descripcion is required. Must be a string"
+                },
+                date: {
+                    bsonType: "date",
+                    description: "date is required. Must be a date"
+                },
+                description: {
+                    bsonType: "string",
+                    description: "description is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+db.incidences.insertMany([
+    {
+        id: autoIncrement("incidences"),
+        id_user: 1,
+        id_place: new Date(),
+        id_status: "1",
+        id_priority: "1",
+        id_category: "1",
+        date: new Date(),
+        description: "Descripcion incidencia"
+    }
+])
+
+//? Category
+db.createCollection("incidenceCategory", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "descripcion"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                descripcion: {
                     bsonType: "string",
                     pattern: "^[a-zA-Z ]+$",
-                    description: "nombreCompleto is required. Must be a string"
-                },
-                emailPersonal: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-                    description: "emailPersonal is required. Must be string with a similar pattern: example@gmail.com"
-                },
-                emailComporativo: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-                    description: "emailComporativo is required. Must be string with a similar pattern: example@gmail.com"
-                },
-                telMovil: {
-                    bsonType: "string",
-                    pattern: "^[0-9]+$",
-                    description: "telMovil is required. Must be a string"
-                },
-                telMovilEmpresa: {
-                    bsonType: "string",
-                    pattern: "^[0-9]+$",
-                    description: "telMovilEmpresa is required. Must be a string"
+                    description: "descripcion is required. Must be a string"
                 }
             }
         }
     }
 });
-db.trainers.insertMany([
+db.incidenceCategory.insertMany([
     {
-        id: autoIncrement("trainers"),
-        cc: 123456,
-        nombreCompleto: "Miguel Angel",
-        emailPersonal: "miguel@gmail.com",
-        emailComporativo: "miguelCorp@gmail.com",
-        telMovil: "123456",
-        telMovilEmpresa: "123456"
+        id: autoIncrement("incidenceCategory"),
+        descripcion: "Hardware"
     },
     {
-        id: autoIncrement("trainers"),
-        cc: 123457,
-        nombreCompleto: "Juan Pablo",
-        emailPersonal: "juan@gmail.com",
-        emailComporativo: "juanCorp@gmail.com",
-        telMovil: "347815",
-        telMovilEmpresa: "787818"
+        id: autoIncrement("incidenceCategory"),
+        descripcion: "Software"
     },
     {
-        id: autoIncrement("trainers"),
-        cc: 123458,
-        nombreCompleto: "Maria Angelina",
-        emailPersonal: "maria@gmail.com",
-        emailComporativo: "mariaCorp@gmail.com",
-        telMovil: "877841",
-        telMovilEmpresa: "157775"
+        id: autoIncrement("incidenceCategory"),
+        descripcion: "Services"
     },
     {
-        id: autoIncrement("trainers"),
-        cc: 123459,
-        nombreCompleto: "Sara Maria",
-        emailPersonal: "sara@gmail.com",
-        emailComporativo: "saraCorp@gmail.com",
-        telMovil: "8796785",
-        telMovilEmpresa: "5478872"
+        id: autoIncrement("incidenceCategory"),
+        descripcion: "Other"
+    }
+]);
+
+//? Status
+db.createCollection("status", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "descripcion"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                descripcion: {
+                    bsonType: "string",
+                    enum: ["New", "In Progress", "Resolved"],
+                    description: "descripcion is required. Must be a string with one of the values: New, In Progress, Resolved"
+                }
+            }
+        }
+    }
+})
+db.status.insertMany([
+    {
+        id: autoIncrement("status"),
+        descripcion: "New"
+    },
+    {
+        id: autoIncrement("status"),
+        descripcion: "In Progress"
+    },
+    {
+        id: autoIncrement("status"),
+        descripcion: "Resolved"
+    }
+]);
+
+//? Priority
+db.createCollection("priority", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "descripcion"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                descripcion: {
+                    bsonType: "string",
+                    enum: ["Low", "Medium", "High"],
+                    description: "descripcion is required. Must be a string with one of the values: Low, Medium, High"
+                }
+            }
+        }
+    }
+});
+db.priority.insertMany([
+    {
+        id: autoIncrement("priority"),
+        descripcion: "Low"
+    },
+    {
+        id: autoIncrement("priority"),
+        descripcion: "Medium"
+    },
+    {
+        id: autoIncrement("priority"),
+        descripcion: "High"
     }
 ])
+
+//? Place
+db.createCollection("place", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_area", "name", "capacity"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_area: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    enum: ["Apolo", "Artemis", "Sputnik", "Hunters", "Bathrooms", "Corvus" ],
+                    description: "name is required. Must be a string"
+                },
+                capacity: {
+                    bsonType: "int",
+                    description: "capacity is required. Must be a int"
+                }
+            }
+        }
+    }
+});
+db.place.insertMany([
+    {
+        id: autoIncrement("place"),
+        id_area: autoIncrement("place"),
+        name: "Apolo",
+        capacity: 25
+    },
+    {
+        id: autoIncrement("place"),
+        id_area: autoIncrement("place"),
+        name: "Artemis",
+        capacity: 25
+    },
+    {
+        id: autoIncrement("place"),
+        id_area: autoIncrement("place"),
+        name: "Sputnik",
+        capacity: 25
+    },
+    {
+        id: autoIncrement("place"),
+        id_area: autoIncrement("place"),
+        name: "Hunters",
+        capacity: 30
+    },
+    {
+        id: autoIncrement("place"),
+        id_area: autoIncrement("place"),
+        name: "Bathrooms",
+        capacity: 5
+    },
+    {
+        id: autoIncrement("place"),
+        id_area: autoIncrement("place"),
+        name: "Corvus",
+        capacity: 25
+    }
+])
+
+//? Area
+db.createCollection("area", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "name"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+db.area.insertMany([
+    {
+        id: autoIncrement("area"),
+        name: "Administrative"
+    },
+    {
+        id: autoIncrement("area"),
+        name: "Technical"
+    },
+    {
+        id: autoIncrement("area"),
+        name: "Human Resources"
+    },
+    {
+        id: autoIncrement("area"),
+        name: "Accounting"
+    },
+    {
+        id: autoIncrement("area"),
+        name: "Recreation"
+    }
+])
+
+//? User
+db.createCollection("user", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_role", "id_area", "name", "lastName", "email"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_role: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string"
+                },
+                password: {
+                    bsonType: "string",
+                    description: "password is required. Must be a string"
+                },
+                email: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$",
+                    description: "email is required. Must be a string"
+                }
+    
+            }
+        }
+    }
+})
+
+//? Role
+db.createCollection("role", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "name"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                },
+                description: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "description is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+
+//? Person
+db.createCollection("person", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_documentType", "id_gender", "id_personKind", "id_city", "name", "lastName"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_documentType: {
+                    bsonType: "int",
+                },
+                id_gender: {
+                    bsonType: "int",
+                },
+                id_personKind: {
+                    bsonType: "int",
+                },
+                id_city: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                },
+                lastName: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "lastName is required. Must be a string"
+                }
+            }
+        }
+    }
+});
+db.person.insertMany([
+    {
+        id: autoIncrement("person"),
+        id_documentType: 1,
+        id_gender: 1,
+        id_personKind: 1,
+        id_city: 1,
+        name: "Miguel",
+        lastName: "Gonzalez"
+    },
+    {
+        id: autoIncrement("person"),
+        id_documentType: 2,
+        id_gender: 2,
+        id_personKind: 2,
+        id_city: 2,
+        name: "Maria",
+        lastName: "Gertrudiz"
+    },
+    {
+        id: autoIncrement("person"),
+        id_documentType: 3,
+        id_gender: 3,
+        id_personKind: 3,
+        id_city: 3,
+        name: "Juan",
+        lastName: "Perez"
+    },
+    {
+        id: autoIncrement("person"),
+        id_documentType: 4,
+        id_gender: 4,
+        id_personKind: 4,
+        id_city: 4,
+        name: "Pablo",
+        lastName: "Gonzalez"
+    }
+]);
+
+//? Person Kind
+db.createCollection("personKind", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "description"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                description: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "description is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+
+//? Document Type
+db.createCollection("documentType", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "description"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                description: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "description is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+
+
+//? Gender
+db.createCollection("gender", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "name"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                }
+            }
+        }
+    }
+});
+db.gender.insertMany([
+    {
+        id: autoIncrement("gender"),
+        name: "Male"
+    },
+    {
+        id: autoIncrement("gender"),
+        name: "Female"
+    }
+])
+
+//? City
+db.createCollection("city", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_country", "name"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_country: {
+                    bsonType: "int",
+                    description: "id_country is required. Must be a int"
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                }
+            }
+        }
+    }
+});
+db.city.insertMany([
+    {
+        id: autoIncrement("city"),
+        id_country: 1,
+        name: "Bogota"
+    },
+    {
+        id: autoIncrement("city"),
+        id_country: 2,
+        name: "Medellin"
+    },
+    {
+        id: autoIncrement("city"),
+        id_country: 3,
+        name: "Cali"
+    }
+])
+
+//? Country
+db.createCollection("country", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "name"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+
+//? Trainer ClassRoom
+db.createCollection("trainerClassRoom", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_trainer", "id_classRoom"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_trainer: {
+                    bsonType: "int",
+                },
+                id_classRoom: {
+                    bsonType: "int",
+                }
+            }
+        }
+    }
+})
+
+//? Tuition
+db.createCollection("tuition", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_person", "id_team", "id_classroom"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_person: {
+                    bsonType: "int",
+                },
+                id_team: {
+                    bsonType: "int",
+                },
+                id_classroom: {
+                    bsonType: "int",
+                }
+            }
+        }
+    }
+})
+
+//? Team
+db.createCollection("team", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "name"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                }
+            }
+        }
+    }
+})
+
+//? Address
+db.createCollection("address", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_city", "id_person", "street", "number", "type_way"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_city: {
+                    bsonType: "int",
+                },
+                id_person: {
+                    bsonType: "int",
+                },
+                street: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "street is required. Must be a string"
+                },
+                number: {
+                    bsonType: "int",
+                    description: "number is required. Must be a int"
+                }
+            }
+        }
+    }
+})
+
+//? Contact 
+db.createCollection("contact", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "id_person", "id_contactType"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                id_person: {
+                    bsonType: "int",
+                },
+                id_contactType: {
+                    bsonType: "int",
+                }
+            }
+        }
+    }
+})
+
+//? Contact Type
+db.createCollection("contactType", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: ["id", "name", "description"],
+            properties: {
+                _id: {
+                    bsonType: "objectId"
+                },
+                id: {
+                    bsonType: "int",
+                },
+                name: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "name is required. Must be a string"
+                },
+                description: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "description is required. Must be a string"
+                }
+            }
+        }
+    }
+})
 
