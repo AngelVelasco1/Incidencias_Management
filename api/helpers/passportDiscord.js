@@ -1,25 +1,24 @@
 import passport from "passport";
 import { Strategy } from "passport-discord";
-import { User } from "../models/user.JS"
-import { CONFIG } from "../config/credentials";
+import { User } from "../models/user.js"
+import { CONFIG } from "../config/credentials.js";
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser(async(id, done) => {
+    const user = await User.findById(id);
     done(null, user)
 });
 
-app.use(new Strategy({
+passport.use(new Strategy({
     clientID: CONFIG.client_id,
     clientSecret: CONFIG.client_secret,
     callbackURL: "/app/login/redirect",
-    scope: ["identify", "guilds"]
+    scope: ["identify", "guilds", "roles_connection.write"]
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        console.log(profile);
-
         const newUser = new User({
             id,
             id_discord: profile.id,

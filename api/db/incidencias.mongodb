@@ -12,16 +12,12 @@ db.counters.insertMany([
     { counter: "roleId", sequenceValue: 0 },
     { counter: "personId", sequenceValue: 0 },
     { counter: "personTypeId", sequenceValue: 0 },
-    { counter: "documentTypeId", sequenceValue: 0 },
     { counter: "genderId", sequenceValue: 0 },
     { counter: "cityId", sequenceValue: 0 },
     { counter: "countryId", sequenceValue: 0 },
     { counter: "trainerClassRoomId", sequenceValue: 0 },
-    { counter: "tuitionId", sequenceValue: 0 },
-    { counter: "teamId", sequenceValue: 0 },
     { counter: "addressId", sequenceValue: 0 },
     { counter: "contactId", sequenceValue: 0 },
-    { counter: "contactTypeId", sequenceValue: 0 },
 
 ]);
 
@@ -356,7 +352,7 @@ db.createCollection("user", {
                     bsonType: "string"
                 },
                 guilds: {
-                    bsonType: array
+                    bsonType: "array"
                 }
 
             }
@@ -469,30 +465,6 @@ db.person.insertMany([
 
 //? Person Kind
 db.createCollection("personKind", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "description"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                description: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "description is required. Must be a string"
-                }
-            }
-        }
-    }
-})
-
-//? Document Type
-db.createCollection("documentType", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
@@ -650,7 +622,7 @@ db.createCollection("address", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_city", "id_person", "street", "number", "type_way"],
+            required: ["id", "id_city", "id_person", "street", "number"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -684,7 +656,7 @@ db.createCollection("contact", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_person", "id_contactType"],
+            required: ["id", "id_person"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -694,41 +666,11 @@ db.createCollection("contact", {
                 },
                 id_person: {
                     bsonType: "int",
-                },
-                id_contactType: {
-                    bsonType: "int",
                 }
             }
         }
     }
 })
 
-//? Contact Type
-db.createCollection("contactType", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "name", "description"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                },
-                description: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "description is required. Must be a string"
-                }
-            }
-        }
-    }
-})
+
 

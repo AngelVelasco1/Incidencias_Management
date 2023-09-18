@@ -1,4 +1,4 @@
-import { getConx } from "../db/conx";
+import { getConx } from "../db/conx.js";
 
 const db = await getConx();
 

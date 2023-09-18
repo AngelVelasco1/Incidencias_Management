@@ -1,4 +1,4 @@
-import { getCollection } from "../db/conx";
+import { getCollection } from "../db/conx.js";
 import { autoIncrement } from "../helpers/autoincrement.js";
 
 export class User {
