@@ -335,7 +335,7 @@ db.createCollection("user", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_role", "id_area", "name", "lastName", "email"],
+            required: ["id", "id_discord", "id_role", "id_area", "username", "guilds" ],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -343,22 +343,22 @@ db.createCollection("user", {
                 id: {
                     bsonType: "int",
                 },
+                id_discord: {
+                    bsonType: "string"
+                },
                 id_role: {
                     bsonType: "int",
                 },
-                name: {
+                id_area: {
+                    bsonType: "int"
+                },
+                username: {
                     bsonType: "string"
                 },
-                password: {
-                    bsonType: "string",
-                    description: "password is required. Must be a string"
-                },
-                email: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$",
-                    description: "email is required. Must be a string"
+                guilds: {
+                    bsonType: array
                 }
-    
+
             }
         }
     }
@@ -399,7 +399,7 @@ db.createCollection("person", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_documentType", "id_gender", "id_personKind", "id_city", "name", "lastName"],
+            required: ["id", "id_documentType", "id_gender", "id_personKind", "id_city", "name"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -423,11 +423,6 @@ db.createCollection("person", {
                     bsonType: "string",
                     pattern: "^[a-zA-Z ]+$",
                     description: "name is required. Must be a string"
-                },
-                lastName: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "lastName is required. Must be a string"
                 }
             }
         }
@@ -519,7 +514,6 @@ db.createCollection("documentType", {
         }
     }
 })
-
 
 //? Gender
 db.createCollection("gender", {
@@ -649,57 +643,6 @@ db.createCollection("trainerClassRoom", {
     }
 })
 
-//? Tuition
-db.createCollection("tuition", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "id_person", "id_team", "id_classroom"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                id_person: {
-                    bsonType: "int",
-                },
-                id_team: {
-                    bsonType: "int",
-                },
-                id_classroom: {
-                    bsonType: "int",
-                }
-            }
-        }
-    }
-})
-
-//? Team
-db.createCollection("team", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "name"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                }
-            }
-        }
-    }
-})
 
 //? Address
 db.createCollection("address", {

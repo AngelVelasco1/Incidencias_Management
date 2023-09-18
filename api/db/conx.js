@@ -15,3 +15,10 @@ export const getConx = async () => {
         return { status: 500, message: err.message }
     }
 }
+
+export const getCollection = async(collection) => {
+    const db = await getConx();
+    const newCollection = db.createCollection(collection);
+    return newCollection;
+
+}
