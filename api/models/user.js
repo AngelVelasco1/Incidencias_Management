@@ -3,7 +3,7 @@ import { autoIncrement } from "../helpers/autoincrement.js";
 
 export class User {
     id;
-    id_discord;
+    discordId;
     id_role;
     id_area;
     username;

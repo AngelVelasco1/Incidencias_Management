@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-discord";
-import { User } from "../models/user.js"
+import { User } from "../models/user.js";
+import { getCollection } from "../db/conx.js";
 import { CONFIG } from "../config/credentials.js";
 
 passport.serializeUser((user, done) => {
@@ -8,7 +9,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async(id, done) => {
-    const user = await User.findById(id);
+    const collection = await getCollection("user");
+    const user = await collection.findOne({discordId: id});
     done(null, user)
 });
 
@@ -20,12 +22,9 @@ passport.use(new Strategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const newUser = new User({
-            id,
-            id_discord: profile.id,
-            id_role,
-            id_area,
+            discordId: profile.id,
             username: profile.username,
-            guilds: profile.guilds
+            guilds: profile.guilds,
         });
         done(null, newUser);
     } catch(err) {

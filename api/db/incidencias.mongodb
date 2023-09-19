@@ -8,7 +8,6 @@ db.counters.insertMany([
     { counter: "priorityId", sequenceValue: 0 },
     { counter: "placeId", sequenceValue: 0 },
     { counter: "areaId", sequenceValue: 0 },
-    { counter: "userId", sequenceValue: 0 },
     { counter: "roleId", sequenceValue: 0 },
     { counter: "personId", sequenceValue: 0 },
     { counter: "personTypeId", sequenceValue: 0 },
@@ -331,15 +330,12 @@ db.createCollection("user", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_discord", "id_role", "id_area", "username", "guilds" ],
+            required: ["discordId", "id_role", "id_area", "username"],
             properties: {
                 _id: {
                     bsonType: "objectId"
                 },
-                id: {
-                    bsonType: "int",
-                },
-                id_discord: {
+                discordId: {
                     bsonType: "string"
                 },
                 id_role: {
@@ -353,12 +349,34 @@ db.createCollection("user", {
                 },
                 guilds: {
                     bsonType: "array"
+                },
+
+                allowances: {
+                    bsonType: "object",
+                    description: "Insert permissions",
+                    properties: {
+                        "/api": {
+                            bsonType: "array",
+                            items: {
+                                bsonType: "string",
+                                description: "Insert specific version"
+                            }
+                        }
+                    }
                 }
 
             }
         }
     }
 })
+db.user.insertMany([
+    {
+        discordId: "732340090168410113",
+        id_role: autoIncrement("role"),
+        id_area: autoIncrement("area"),
+        username: "angel",
+    }
+])
 
 //? Role
 db.createCollection("role", {
@@ -395,15 +413,12 @@ db.createCollection("person", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_documentType", "id_gender", "id_personKind", "id_city", "name"],
+            required: ["id", "id_gender", "id_personKind", "id_city", "name"],
             properties: {
                 _id: {
                     bsonType: "objectId"
                 },
                 id: {
-                    bsonType: "int",
-                },
-                id_documentType: {
                     bsonType: "int",
                 },
                 id_gender: {
@@ -427,39 +442,31 @@ db.createCollection("person", {
 db.person.insertMany([
     {
         id: autoIncrement("person"),
-        id_documentType: 1,
         id_gender: 1,
         id_personKind: 1,
         id_city: 1,
         name: "Miguel",
-        lastName: "Gonzalez"
     },
     {
         id: autoIncrement("person"),
-        id_documentType: 2,
         id_gender: 2,
         id_personKind: 2,
         id_city: 2,
         name: "Maria",
-        lastName: "Gertrudiz"
     },
     {
         id: autoIncrement("person"),
-        id_documentType: 3,
         id_gender: 3,
         id_personKind: 3,
         id_city: 3,
         name: "Juan",
-        lastName: "Perez"
     },
     {
         id: autoIncrement("person"),
-        id_documentType: 4,
         id_gender: 4,
         id_personKind: 4,
         id_city: 4,
         name: "Pablo",
-        lastName: "Gonzalez"
     }
 ]);
 

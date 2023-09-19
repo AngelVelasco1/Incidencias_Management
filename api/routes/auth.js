@@ -3,4 +3,10 @@ import passport from "passport";
 
 const authStorage = Router();
 
-export default authStorage.get("/login", passport.authenticate('discord'));
+authStorage.get("/login", passport.authenticate("discord"));
+authStorage.get("/login/redirect", passport.authenticate("discord", {
+    successRedirect: "/home",
+    failureRedirect: "/"
+}));
+
+export default authStorage ;
