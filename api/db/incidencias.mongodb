@@ -8,7 +8,6 @@ db.counters.insertMany([
     { counter: "priorityId", sequenceValue: 0 },
     { counter: "placeId", sequenceValue: 0 },
     { counter: "areaId", sequenceValue: 0 },
-    { counter: "roleId", sequenceValue: 0 },
     { counter: "personId", sequenceValue: 0 },
     { counter: "personTypeId", sequenceValue: 0 },
     { counter: "genderId", sequenceValue: 0 },
@@ -330,19 +329,16 @@ db.createCollection("user", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["discordId", "id_role", "id_area", "username"],
+            required: ["id", "discordId", "username"],
             properties: {
                 _id: {
                     bsonType: "objectId"
                 },
-                discordId: {
+                id: {
                     bsonType: "string"
                 },
-                id_role: {
-                    bsonType: "int",
-                },
-                id_area: {
-                    bsonType: "int"
+                discordId: {
+                    bsonType: "string"
                 },
                 username: {
                     bsonType: "string"
@@ -371,41 +367,11 @@ db.createCollection("user", {
 })
 db.user.insertMany([
     {
+        id: "732340090168410113",
         discordId: "732340090168410113",
-        id_role: autoIncrement("role"),
-        id_area: autoIncrement("area"),
-        username: "angel",
+        username: "angel_vlk",
     }
 ])
-
-//? Role
-db.createCollection("role", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "name"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                },
-                description: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "description is required. Must be a string"
-                }
-            }
-        }
-    }
-})
 
 //? Person
 db.createCollection("person", {

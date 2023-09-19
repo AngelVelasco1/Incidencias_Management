@@ -4,8 +4,6 @@ import { autoIncrement } from "../helpers/autoincrement.js";
 export class User {
     id;
     discordId;
-    id_role;
-    id_area;
     username;
     guilds;
     constructor(){};

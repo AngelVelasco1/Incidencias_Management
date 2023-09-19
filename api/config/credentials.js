@@ -8,5 +8,6 @@ export const CONFIG = {
     "db": process.env.ATLAS_DB,
     "client_id": process.env.DISCORD_CLIENT_ID,
     "client_secret": process.env.DISCORD_CLIENT_SECRET,
+    "bot_token": process.env.DISCORD_BOT_TOKEN,
     "private_key": process.env.PRIVATE_KEY
 }
