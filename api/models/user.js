@@ -4,7 +4,10 @@ import { autoIncrement } from "../helpers/autoincrement.js";
 export class User {
     discord_id;
     username;
-    guilds;
+    email;
+    id_role;
+    id_gender;
+    id_address;
     constructor(){};
     async conx () {
         try {

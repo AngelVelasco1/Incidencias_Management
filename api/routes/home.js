@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-const authHome = Router();
+const homeStorage = Router();
 
-authHome.get("/", (req, res) => {
+homeStorage.get("/", (req, res) => {
     res.send("Incidents dashboard");
 });
 
 
-export default authHome;
+export default homeStorage;
