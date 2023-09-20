@@ -22,6 +22,7 @@
     "mongodb": "6.1.0",
     "passport": "0.6.0",
     "passport-discord": "^0.1.4",
+    "passport-http-bearer": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "6.16.0",
@@ -35,6 +36,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "jsonwebtoken": "9.0.2",
     "nodemon": "3.0.1",
     "vite": "^4.4.5"
   }

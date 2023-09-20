@@ -3,6 +3,7 @@ import { Strategy } from "passport-discord";
 import { CONFIG } from "../config/credentials.js";
 import { getConx } from "../db/conx.js";
 import { ObjectId } from "mongodb";
+import { createToken } from "../jwt/token.js";
 
 const db = await getConx();
 const users = db.collection("user")
@@ -14,7 +15,6 @@ passport.use(new Strategy({
     scope: ["identify", "guilds", "email", "guilds.members.read"]
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-
         const user = await users.findOne({ discord_id: profile.id });
         if (user) {
             return done(null, user);

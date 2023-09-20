@@ -5,7 +5,7 @@ import homeStorage from './routes/home.js';
 import session from 'express-session';
 import passport from "passport"
 import { CONFIG } from "./config/credentials.js";
-
+import { createToken } from "./jwt/token.js"
 const app = express();
 
 app.use(cors());
@@ -21,7 +21,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/login", loginStorage)
+app.use("/login", loginStorage);
 app.use("/home", homeStorage);
 
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import { validateToken } from "../jwt/token.js";
 const homeStorage = Router();
 
 homeStorage.get("/", (req, res) => {
