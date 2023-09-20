@@ -6,19 +6,14 @@ db.counters.insertMany([
     { counter: "incidenceCategoryId", sequenceValue: 0 },
     { counter: "statusId", sequenceValue: 0 },
     { counter: "priorityId", sequenceValue: 0 },
+    { counter: "roleId", sequenceValue: 0 },
     { counter: "placeId", sequenceValue: 0 },
     { counter: "areaId", sequenceValue: 0 },
-    { counter: "personId", sequenceValue: 0 },
-    { counter: "personTypeId", sequenceValue: 0 },
     { counter: "genderId", sequenceValue: 0 },
     { counter: "cityId", sequenceValue: 0 },
     { counter: "countryId", sequenceValue: 0 },
-    { counter: "trainerClassRoomId", sequenceValue: 0 },
-    { counter: "addressId", sequenceValue: 0 },
-    { counter: "contactId", sequenceValue: 0 },
-
+    { counter: "addressId", sequenceValue: 0 }
 ]);
-
 const autoIncrement = (collection) => {
     const sequenceDocument = db.counters.findOneAndUpdate(
        { counter: `${collection}Id`},
@@ -45,24 +40,23 @@ db.createCollection("incidences", {
                 },
                 id_user: {
                     bsonType: "int",
-                    description: "trainersId is required. Must be a int"
+                    description: "id_user is required. Must be a int"
                 },
                 id_place: {
-                    bsonType: "date",
-                    description: "fecha is required. Must be a date"
+                    bsonType: "int",
+                    description: "id_place is required. Must be a int"
                 },
                 id_status: {
-                    bsonType: "string",
-                    pattern: "^[0-9]+$",
-                    description: "hora is required. Must be a string"
+                    bsonType: "int",
+                    description: "id_status is required. Must be a int"
                 },
                 id_priority: {
-                    bsonType: "string",
-                    description: "descripcion is required. Must be a string"
+                    bsonType: "int",
+                    description: "id_priority is required. Must be a int"
                 },
                 id_category: {
-                    bsonType: "string",
-                    description: "descripcion is required. Must be a string"
+                    bsonType: "int",
+                    description: "id_category is required. Must be a int"
                 },
                 date: {
                     bsonType: "date",
@@ -70,6 +64,7 @@ db.createCollection("incidences", {
                 },
                 description: {
                     bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
                     description: "description is required. Must be a string"
                 }
             }
@@ -80,12 +75,12 @@ db.incidences.insertMany([
     {
         id: autoIncrement("incidences"),
         id_user: 1,
-        id_place: new Date(),
-        id_status: "1",
-        id_priority: "1",
-        id_category: "1",
+        id_place: 2,
+        id_status: 3,
+        id_priority: 2,
+        id_category: 1,
         date: new Date(),
-        description: "Descripcion incidencia"
+        description: "Monitor is not working"
     }
 ])
 
@@ -106,6 +101,7 @@ db.createCollection("incidenceCategory", {
                 descripcion: {
                     bsonType: "string",
                     pattern: "^[a-zA-Z ]+$",
+                    enum: ["Hardware", "Software", "Services", "Other"],
                     description: "descripcion is required. Must be a string"
                 }
             }
@@ -329,24 +325,37 @@ db.createCollection("user", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "discordId", "username"],
+            required: ["discord_id", "username", "email", "id_role", "id_gender", "id_address"],
             properties: {
                 _id: {
                     bsonType: "objectId"
                 },
-                id: {
-                    bsonType: "string"
-                },
-                discordId: {
+                discord_id: {
                     bsonType: "string"
                 },
                 username: {
                     bsonType: "string"
                 },
+                email: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+                    description: "email is required. Must be a string"
+                },
+                id_role: {
+                    bsonType: "int",
+                    description: "id_role is required. Must be a int"
+                },
+                id_gender: {
+                    bsonType: "int",
+                    description: "id_gender is required. Must be a int"
+                },
+                id_address: {
+                    bsonType: "int",
+                    description: "id_address is required. Must be a int"
+                },
                 guilds: {
                     bsonType: "array"
                 },
-
                 allowances: {
                     bsonType: "object",
                     description: "Insert permissions",
@@ -367,19 +376,22 @@ db.createCollection("user", {
 })
 db.user.insertMany([
     {
-        id: "732340090168410113",
-        discordId: "732340090168410113",
+        discord_id: "732340090168410113",
         username: "angel_vlk",
+        email: "angel@example.com",
+        id_role: 1,
+        id_gender: 1,
+        id_address: 2
     }
 ])
 
-//? Person
-db.createCollection("person", {
+//? Role
+db.createCollection("role", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_gender", "id_personKind", "id_city", "name"],
+            required: ["id", "name"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -387,17 +399,9 @@ db.createCollection("person", {
                 id: {
                     bsonType: "int",
                 },
-                id_gender: {
-                    bsonType: "int",
-                },
-                id_personKind: {
-                    bsonType: "int",
-                },
-                id_city: {
-                    bsonType: "int",
-                },
                 name: {
                     bsonType: "string",
+                    enum: ["admin", "trainer", "camper"],
                     pattern: "^[a-zA-Z ]+$",
                     description: "name is required. Must be a string"
                 }
@@ -405,60 +409,21 @@ db.createCollection("person", {
         }
     }
 });
-db.person.insertMany([
+db.role.insertMany([
     {
-        id: autoIncrement("person"),
-        id_gender: 1,
-        id_personKind: 1,
-        id_city: 1,
-        name: "Miguel",
+        id: autoIncrement("role"),
+        name: "admin"
     },
     {
-        id: autoIncrement("person"),
-        id_gender: 2,
-        id_personKind: 2,
-        id_city: 2,
-        name: "Maria",
+        id: autoIncrement("role"),
+        name: "trainer"
     },
     {
-        id: autoIncrement("person"),
-        id_gender: 3,
-        id_personKind: 3,
-        id_city: 3,
-        name: "Juan",
-    },
-    {
-        id: autoIncrement("person"),
-        id_gender: 4,
-        id_personKind: 4,
-        id_city: 4,
-        name: "Pablo",
+        id: autoIncrement("role"),
+        name: "camper"
     }
-]);
+])
 
-//? Person Kind
-db.createCollection("personKind", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "description"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                description: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "description is required. Must be a string"
-                }
-            }
-        }
-    }
-})
 
 //? Gender
 db.createCollection("gender", {
@@ -476,6 +441,7 @@ db.createCollection("gender", {
                 },
                 name: {
                     bsonType: "string",
+                    enum: ["Male", "Female"],
                     pattern: "^[a-zA-Z ]+$",
                     description: "name is required. Must be a string"
                 }
@@ -563,39 +529,13 @@ db.createCollection("country", {
     }
 })
 
-//? Trainer ClassRoom
-db.createCollection("trainerClassRoom", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "id_trainer", "id_classRoom"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                id_trainer: {
-                    bsonType: "int",
-                },
-                id_classRoom: {
-                    bsonType: "int",
-                }
-            }
-        }
-    }
-})
-
-
-//? Address
+//? Address 
 db.createCollection("address", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_city", "id_person", "street", "number"],
+            required: ["id", "id_country", "street", "number"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -603,15 +543,12 @@ db.createCollection("address", {
                 id: {
                     bsonType: "int",
                 },
-                id_city: {
-                    bsonType: "int",
-                },
-                id_person: {
+                id_country: {
                     bsonType: "int",
                 },
                 street: {
                     bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
+                    pattern: "^[a-zA-Z 0-9]+$",
                     description: "street is required. Must be a string"
                 },
                 number: {
@@ -621,29 +558,23 @@ db.createCollection("address", {
             }
         }
     }
-})
-
-//? Contact 
-db.createCollection("contact", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "id_person"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                id_person: {
-                    bsonType: "int",
-                }
-            }
-        }
+});
+db.address.insertMany([
+    {
+        id: autoIncrement("address"),
+        id_country: 1,
+        street: "Calle 123",
+        number: 123
+    },
+    {
+        id: autoIncrement("address"),
+        id_country: 2,
+        street: "Calle 456",
+        number: 456
     }
-})
+])
+
+
 
 
 

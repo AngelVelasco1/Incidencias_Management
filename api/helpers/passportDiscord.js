@@ -1,15 +1,15 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import { User } from "../models/user.js";
-import { getCollection } from "../db/conx.js";
+import passport from "passport";
+import { Strategy } from "passport-discord"
 import { CONFIG } from "../config/credentials.js";
 
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-});
+passport.use(new Strategy({
+    clientID: CONFIG.client_id,
+    clientSecret: CONFIG.client_secret,
+    callbackURL: CONFIG.redirect_uri,
+    scope: ["identify", "guilds"]
+}, async (accessToken, refreshToken, profile, done) => {
+    const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+    await client.login(CONFIG.bot_token);
+}));
 
-client.on("message", (message) => {
-    console.log(message);
-})
-client.login(CONFIG.bot_token);

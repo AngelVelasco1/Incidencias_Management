@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import authStorage from './routes/auth.js';
+import authStorage from './routes/login.js';
 import homeStorage from './routes/home.js';
 import session from 'express-session';
 import passport from "passport"
+import { authMiddleware } from './helpers/passportDiscord.js';
 import * as passportDiscord from "./helpers/passportDiscord.js";
 
 const app = express();
@@ -18,7 +19,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/app", authStorage)
+app.use("/app", authStorage, authMiddleware)
 app.use("/app/home", homeStorage)
 
 export default app;
