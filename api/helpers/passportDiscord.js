@@ -3,7 +3,6 @@ import { Strategy } from "passport-discord";
 import { CONFIG } from "../config/credentials.js";
 import { getConx } from "../db/conx.js";
 import { ObjectId } from "mongodb";
-import { createToken } from "../jwt/token.js";
 
 const db = await getConx();
 const users = db.collection("user")
@@ -20,10 +19,14 @@ passport.use(new Strategy({
             return done(null, user);
         } 
         else {
+
             const newUser = {
                 discord_id: profile.id,
                 username: profile.username,
-                email: profile.email,                
+                email: profile.email,    
+                id_role: 1,
+                id_gender: 1,
+                id_address: 1         
             };
             const { insertedId } = await users.insertOne(newUser);
             const newUserInfo = {
@@ -32,6 +35,7 @@ passport.use(new Strategy({
             }
             return done(null, newUserInfo);
         }   
+
     }
     catch (err) {
         console.error({ err: err.message });

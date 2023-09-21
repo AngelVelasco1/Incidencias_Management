@@ -10,26 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "1.7.17",
+    "@nextui-org/react": "^2.1.13",
     "cookie-parser": "1.4.6",
     "cors": "2.8.5",
+    "discord.js": "^14.13.0",
     "dotenv": "16.3.1",
     "express": "4.18.2",
     "express-rate-limit": "7.0.1",
     "express-routes-versioning": "1.0.1",
     "express-session": "1.17.3",
     "express-validator": "7.0.1",
-    "jose": "4.14.6",
+    "framer-motion": "^10.16.4",
     "mongodb": "6.1.0",
     "passport": "0.6.0",
     "passport-discord": "^0.1.4",
     "passport-http-bearer": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "6.16.0",
-    "reflect-metadata": "0.1.13"
+    "react-router-dom": "6.16.0"
   },
   "devDependencies": {
-    "@mantine/core": "7.0.0",
     "@mantine/hooks": "7.0.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -42,7 +43,6 @@
     "jsonwebtoken": "9.0.2",
     "nodemon": "3.0.1",
     "postcss": "^8.4.30",
-    "postcss-preset-mantine": "^1.7.0",
     "postcss-simple-vars": "^7.0.1",
     "tailwindcss": "3.3.3",
     "vite": "^4.4.5"
