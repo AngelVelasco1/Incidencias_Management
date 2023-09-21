@@ -6,7 +6,6 @@ db.counters.insertMany([
     { counter: "incidenceCategoryId", sequenceValue: 0 },
     { counter: "statusId", sequenceValue: 0 },
     { counter: "priorityId", sequenceValue: 0 },
-    { counter: "roleId", sequenceValue: 0 },
     { counter: "placeId", sequenceValue: 0 },
     { counter: "areaId", sequenceValue: 0 },
     { counter: "genderId", sequenceValue: 0 },
@@ -325,7 +324,7 @@ db.createCollection("user", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["discord_id", "username", "email", "id_role", "id_gender", "id_address"],
+            required: ["discord_id", "username", "email", "id_gender", "id_address"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -340,10 +339,6 @@ db.createCollection("user", {
                     bsonType: "string",
                     pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
                     description: "email is required. Must be a string"
-                },
-                id_role: {
-                    bsonType: "int",
-                    description: "id_role is required. Must be a int"
                 },
                 id_gender: {
                     bsonType: "int",
@@ -379,51 +374,10 @@ db.user.insertMany([
         discord_id: "732340090168410113",
         username: "angel_vlk",
         email: "angel@example.com",
-        id_role: 1,
         id_gender: 1,
         id_address: 2
     }
 ])
-
-//? Role
-db.createCollection("role", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "name"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    enum: ["admin", "trainer", "camper"],
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                }
-            }
-        }
-    }
-});
-db.role.insertMany([
-    {
-        id: autoIncrement("role"),
-        name: "admin"
-    },
-    {
-        id: autoIncrement("role"),
-        name: "trainer"
-    },
-    {
-        id: autoIncrement("role"),
-        name: "camper"
-    }
-])
-
 
 //? Gender
 db.createCollection("gender", {
