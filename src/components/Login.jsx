@@ -3,7 +3,6 @@ import React from "react";
 import {Button} from "@nextui-org/react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
 
 export const Loginbtn = () => {
   return (

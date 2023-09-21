@@ -11,7 +11,7 @@ passport.use(new Strategy({
     clientID: CONFIG.client_id,
     clientSecret: CONFIG.client_secret,
     callbackURL: CONFIG.redirect_uri,
-    scope: ["identify", "guilds", "email", "guilds.members.read"]
+    scope: ["identify", "guilds", "email", "guilds.members.read", "bot", "applications.commands"],
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const user = await users.findOne({ discord_id: profile.id });

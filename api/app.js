@@ -5,8 +5,7 @@ import homeStorage from './routes/home.js';
 import session from 'express-session';
 import passport from "passport"
 import { CONFIG } from "./config/credentials.js";
-import { runBot } from "./helpers/discordBot.js"
-
+import { getRoles } from "./helpers/discordBot.js";
 
 const app = express();
 
@@ -23,7 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/login", loginStorage);
-app.use("/home", runBot, homeStorage);
+app.use("/home", getRoles, homeStorage);
 
 
 export default app;
