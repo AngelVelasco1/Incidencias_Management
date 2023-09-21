@@ -8,12 +8,10 @@ import { CONFIG } from "./config/credentials.js";
 import { runBot } from "./helpers/discordBot.js"
 
 
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded())
 
 app.use(session({
     secret: CONFIG.secret_session,
