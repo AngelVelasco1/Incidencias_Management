@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { validateToken } from "../jwt/token.js";
-const homeStorage = Router();
 
-homeStorage.get("/", (req, res) => {
+const dashboardStorage = Router();
+dashboardStorage.get("/", (req, res) => {
     res.send("Incidents dashboard");
 });
 
-
-export default homeStorage;
+export default dashboardStorage;

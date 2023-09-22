@@ -1,10 +1,12 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+
+const env = loadEnv("development", process.cwd(), 'VITE')
 
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5084,
-    host: "127.1.1.2"
+    host: env.VITE_HOSTNAME,
+    port: env.VITE_FRONTEND_PORT
   }
 })

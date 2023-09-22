@@ -6,7 +6,7 @@ const loginStorage = Router();
 
 loginStorage.get("/auth",  passport.authenticate('discord'));
 loginStorage.get("/auth/redirect", passport.authenticate('discord', {
-    successRedirect: "/api/home",
+    successRedirect: "/api/dashboard",
     failureRedirect: "/"
 }), );
 

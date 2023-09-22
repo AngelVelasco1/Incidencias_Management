@@ -22,7 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/login", loginStorage);
-app.use("/api/home", getRoles, homeStorage);
+app.use("/api/dashboard", getRoles, homeStorage);
 
 
 export default app;
