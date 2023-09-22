@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 export const Login = () => {
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-fuchsia-100">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -20,7 +20,9 @@ export const Login = () => {
           <h2>Login to your account</h2>
         </div>
       </div>
-      <Button color="primary" variant= "bordered">
+
+      <Button color="default" variant= "ghost">
+      <img id= "discordImg" src="./src/assets/discord.png "></img>
         Discord
       </Button>  
      

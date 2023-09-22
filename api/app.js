@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import loginStorage from './routes/login.js';
-import homeStorage from './routes/home.js';
+import homeStorage from './routes/dashboardCamper.js';
 import session from 'express-session';
 import passport from "passport"
 import { CONFIG } from "./config/credentials.js";
@@ -21,8 +21,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/login", loginStorage);
-app.use("/home", getRoles, homeStorage);
+app.use("/api/login", loginStorage);
+app.use("/api/home", getRoles, homeStorage);
 
 
 export default app;
