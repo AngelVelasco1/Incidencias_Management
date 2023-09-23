@@ -18,7 +18,6 @@ export const getConx = async () => {
 
 export const getCollection = async(collection) => {
     const db = await getConx();
-    const newCollection = db.createCollection(collection);
+    const newCollection = db.collection(collection);
     return newCollection;
-
 }

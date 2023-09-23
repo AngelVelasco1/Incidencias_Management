@@ -41,7 +41,7 @@ export const Login = () => {
             </h1>
             <h2 className="text-center text-xl tracking-tight text-white-800 mb-8">Login to your account</h2>
           </div>
-        <Button className="justify-evenly bg-gradient-to-tr from-zinc-100 to-zinc-300 text-indigo-500 text-xl font-bold" size="lg"  variant="light" onClick={handleDiscordLogin}>
+        <Button className=" bg-gradient-to-tr from-zinc-100 to-zinc-300 text-indigo-500 text-xl font-bold" size="lg"  variant="light" onClick={handleDiscordLogin}>
           <img  width="42" src="./src/assets/discord.png "></img>
           Discord
         </Button>
