@@ -1,6 +1,6 @@
 import passport from "passport";
-import { Strategy } from "passport-discord";
 import jwt from "jsonwebtoken"
+import { Strategy } from "passport-discord";
 import { CONFIG } from "../config/credentials.js";
 import { getConx } from "../db/conx.js";
 import { ObjectId } from "mongodb";
@@ -9,7 +9,6 @@ const db = await getConx();
 const users = db.collection("user");
 const private_key = CONFIG.private_key;
 
-// lOGIN WITH PASSPORT AND JWT
 passport.use(new Strategy({
     clientID: CONFIG.client_id,
     clientSecret: CONFIG.client_secret,
@@ -45,17 +44,6 @@ passport.use(new Strategy({
         return done(err, null)
     }
 }));
-
-/* JWT INTO COOKIE */
-export const setCookieToken = (req, res, next) => {
-    if(req.user && req.user.token) {
-        res.cookie("token", req.user.token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 });
-        console.log({ token: req.user.token });
-        next();
-    }
-    next();
-}
-
 passport.serializeUser(async (user, done) => {
     try {
         done(null, user)
@@ -64,11 +52,9 @@ passport.serializeUser(async (user, done) => {
         done(err, null)
     }
 });
-
 passport.deserializeUser(async (id, done) => {
     try {
         const userId = new ObjectId(id.user._id)
-        console.log(userId);
         const user = await users.findOne({ _id: userId });
         if(!user) throw new Error("User not found");
         
@@ -79,7 +65,15 @@ passport.deserializeUser(async (id, done) => {
     }
 })
 
-/* lOGOUT */
+export const setCookieToken = (req, res, next) => {
+    if(req.user && req.user.token) {
+        res.cookie("token", req.user.token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 });
+        console.log({ token: req.user.token });
+        next();
+    }
+    next();
+}
+
 export const logout = (req, res) => {
     res.clearCookie("token");
     res.sendStatus(200);

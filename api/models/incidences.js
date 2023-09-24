@@ -1,5 +1,5 @@
 import { getCollection } from "../db/conx.js";
-import { autoincrement } from "../helpers/autoincrement.js";
+import { autoIncrement } from "../helpers/autoincrement.js";
 
 
 export class Incidences {
@@ -37,7 +37,7 @@ export class Incidences {
     async addIncidence(data) { 
         try {
             const db = await this.conx();
-            const id = await autoincrement("incidences");
+            const id = await autoIncrement("incidences");
             const newIncidence = {
                 id,
                 ...data,
