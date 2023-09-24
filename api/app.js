@@ -7,6 +7,7 @@ import cors from 'cors';
 import { setCookieToken } from './helpers/passportDiscord.js';
 import loginStorage from './routes/login.js';
 import homeStorage from './routes/dashboardCamper.js';
+import { crudRoutes } from './routes/incidences.js';
 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(passport.session());
 
 app.use("/api/login", loginStorage);
 app.use("/api/dashboard", getRoles, setCookieToken, homeStorage);
+app.use("/app", crudRoutes);
 
 
 export default app;
