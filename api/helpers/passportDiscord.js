@@ -1,11 +1,14 @@
 import passport from "passport";
 import { Strategy } from "passport-discord";
+import jwt from "jsonwebtoken"
 import { CONFIG } from "../config/credentials.js";
 import { getConx } from "../db/conx.js";
 import { ObjectId } from "mongodb";
 
 const db = await getConx();
-const users = db.collection("user")
+const users = db.collection("user");
+const private_key = CONFIG.private_key;
+
 
 passport.use(new Strategy({
     clientID: CONFIG.client_id,
@@ -16,10 +19,11 @@ passport.use(new Strategy({
     try {
         const user = await users.findOne({ discord_id: profile.id });
         if (user) {
-            return done(null, user);
+            const token = jwt.sign({ discord_id: user.discord_id }, private_key, { expiresIn: '3h' });
+            console.log(token);
+            return done(null, {user, token});
         } 
         else {
-
             const newUser = {
                 discord_id: profile.id,
                 username: profile.username,
@@ -33,7 +37,9 @@ passport.use(new Strategy({
                 _id: insertedId,
                 info: newUser,
             }
-            return done(null, newUserInfo);
+            const token = jwt.sign({ discord_id: newUserInfo.info.discord_id }, private_key, { expiresIn: '3h' });
+            console.log(token);
+            return done(null, { user: newUserInfo, token });
         }   
 
     }
@@ -44,9 +50,9 @@ passport.use(new Strategy({
 }));
 
 
-passport.serializeUser(async (user, done) => {
+passport.serializeUser(async (userTokenPair, done) => {
     try {
-        done(null, user._id)
+        done(null, userTokenPair)
     } catch(err) {
         console.error({ err: err.message });
         done(err, null)

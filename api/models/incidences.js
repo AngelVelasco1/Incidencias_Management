@@ -34,7 +34,7 @@ export class Incidences {
         }
     }
 
-    async addIncidences(data) { 
+    async addIncidence(data) { 
         try {
             const db = await this.conx();
             const id = await autoincrement("incidences");
@@ -51,7 +51,7 @@ export class Incidences {
         }
     }
 
-    async updateIncidences(id, data) {
+    async updateIncidence(id, data) {
         try {
             const db = await this.conx();
             const updatedIncidence = {
@@ -66,7 +66,7 @@ export class Incidences {
         }
     }
 
-    async deleteIncidences(id) {
+    async deleteIncidence(id) {
         try {
             const db = await this.conx();
             const result = await db.deleteOne({ "id": parseInt(id) })

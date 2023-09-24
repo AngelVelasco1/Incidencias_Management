@@ -4,8 +4,10 @@ import passport from "passport"
 import { CONFIG } from "./config/credentials.js";
 import { getRoles } from "./helpers/discordBot.js";
 import cors from 'cors';
+import { createToken } from './jwt/token.js';
 import loginStorage from './routes/login.js';
 import homeStorage from './routes/dashboardCamper.js';
+
 
 const app = express();
 
