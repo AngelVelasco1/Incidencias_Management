@@ -4,7 +4,7 @@ import passport from "passport"
 import { CONFIG } from "./config/credentials.js";
 import { getRoles } from "./helpers/discordBot.js";
 import cors from 'cors';
-import { createToken } from './jwt/token.js';
+import { setCookieToken } from './helpers/passportDiscord.js';
 import loginStorage from './routes/login.js';
 import homeStorage from './routes/dashboardCamper.js';
 
@@ -29,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/login", loginStorage);
-app.use("/api/dashboard", getRoles, homeStorage);
+app.use("/api/dashboard", getRoles, setCookieToken, homeStorage);
 
 
 export default app;

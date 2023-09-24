@@ -9,7 +9,7 @@ const db = await getConx();
 const users = db.collection("user");
 const private_key = CONFIG.private_key;
 
-
+// lOGIN WITH PASSPORT AND JWT
 passport.use(new Strategy({
     clientID: CONFIG.client_id,
     clientSecret: CONFIG.client_secret,
@@ -20,7 +20,6 @@ passport.use(new Strategy({
         const user = await users.findOne({ discord_id: profile.id });
         if (user) {
             const token = jwt.sign({ discord_id: user.discord_id }, private_key, { expiresIn: '3h' });
-            console.log(token);
             return done(null, {user, token});
         } 
         else {
@@ -28,7 +27,6 @@ passport.use(new Strategy({
                 discord_id: profile.id,
                 username: profile.username,
                 email: profile.email,    
-                id_role: 1,
                 id_gender: 1,
                 id_address: 1         
             };
@@ -38,7 +36,6 @@ passport.use(new Strategy({
                 info: newUser,
             }
             const token = jwt.sign({ discord_id: newUserInfo.info.discord_id }, private_key, { expiresIn: '3h' });
-            console.log(token);
             return done(null, { user: newUserInfo, token });
         }   
 
@@ -49,11 +46,20 @@ passport.use(new Strategy({
     }
 }));
 
+/* JWT INTO COOKIE */
+export const setCookieToken = (req, res, next) => {
+    if(req.user && req.user.token) {
+        res.cookie("token", req.user.token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 });
+        console.log({ token: req.user.token });
+        next();
+    }
+    next();
+}
 
-passport.serializeUser(async (userTokenPair, done) => {
+passport.serializeUser(async (user, done) => {
     try {
-        done(null, userTokenPair)
-    } catch(err) {
+        done(null, user)
+    } catch(err) {  
         console.error({ err: err.message });
         done(err, null)
     }
@@ -61,13 +67,22 @@ passport.serializeUser(async (userTokenPair, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await users.findOne({ _id: new ObjectId(id) })
+        const userId = new ObjectId(id.user._id)
+        console.log(userId);
+        const user = await users.findOne({ _id: userId });
         if(!user) throw new Error("User not found");
+        
         done(null, user)
     } catch(err) {
         console.error({ err: err.message });
         done(err, null)
     }
 })
+
+/* lOGOUT */
+export const logout = (req, res) => {
+    res.clearCookie("token");
+    res.sendStatus(200);
+}
 
 export default passport;
