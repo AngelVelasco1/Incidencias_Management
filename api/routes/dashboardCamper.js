@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { validateToken } from "../middlewares/validateToken.js";
 
 const dashboardStorage = Router();
 dashboardStorage.get("/", (req, res) => {

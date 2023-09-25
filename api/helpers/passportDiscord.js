@@ -46,7 +46,6 @@ passport.use(new Strategy({
 }));
 passport.serializeUser(async (user, done) => {
     try {
-        console.log(user);
         done(null, user)
     } catch(err) {  
         console.error({ err: err.message });
@@ -68,9 +67,8 @@ passport.deserializeUser(async (id, done) => {
 
 export const setCookieToken = (req, res, next) => {
     if(req.user) {
-        console.log(req.user && req.token);
-        res.cookie("token", req.token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 });
-        console.log({ token: req.token });
+        res.cookie("token", req.user);
+        console.log({ token: req });
         next();
     }
     next();

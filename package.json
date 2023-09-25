@@ -13,7 +13,7 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "^2.1.13",
-    "cookie-parser": "1.4.6",
+    "cookie-parser": "^1.4.6",
     "cors": "2.8.5",
     "discord.js": "^14.13.0",
     "dotenv": "16.3.1",

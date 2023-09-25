@@ -8,7 +8,7 @@ import { setCookieToken } from './helpers/passportDiscord.js';
 import loginStorage from './routes/login.js';
 import homeStorage from './routes/dashboardCamper.js';
 import { initRoutes } from './routes/router.js';
-import { validateToken } from './middlewares/validateToken.js';
+import cookieParser from 'cookie-parser';
 
 
 const app = express();
@@ -26,9 +26,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 app.use("/api/login", loginStorage);
 app.use("/api/dashboard", setCookieToken, getRoles, homeStorage);

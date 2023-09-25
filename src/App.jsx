@@ -8,7 +8,9 @@ export const Router = () => {
             <Routes>
                 <Route path="/" element={<LoginView />} />
                 <Route path="/dashboardCamper" element={<DashboardCamperView />} />
+
             </Routes>
+         
         </BrowserRouter>
 
     )

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import passport from "../helpers/passportDiscord.js";
 import { CONFIG } from "../config/credentials.js";
-import { validateToken } from "../middlewares/validateToken.js";
 
 const loginStorage = Router();
 
