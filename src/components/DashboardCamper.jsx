@@ -1,7 +1,12 @@
+import {Navbar} from "./Navbar.jsx"
 import React from 'react'
+
 
 export const DashboardCamper = () =>{
   return (
-    <div>Welcome camper</div>
+    <>
+      <Navbar/>
+      <div>Welcome camper</div>
+    </>
   )
 }

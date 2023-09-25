@@ -2,8 +2,8 @@ import { getService, postService, putService, deleteService } from "../services/
 
 export const getIncidences = async(req, res) => {
     try {
-        const Incidences = await getService();
-        res.status(200).json(Incidences);
+        const incidences = await getService();
+        res.status(200).json(incidences);
     } catch(err) {
         res.status(500).send({error: err.message});
     }

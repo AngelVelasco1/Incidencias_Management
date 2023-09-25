@@ -1,6 +1,6 @@
 import { Incidences } from "../models/incidences.js"
 
-const incidences = new Incidences;
+const incidences = new Incidences();
 
 export const getService = async () => {
     return await incidences.getIncidences();

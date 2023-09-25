@@ -9,4 +9,5 @@ export const crudRoutes = () => {
     app.put("/incidences", controller.updateIncidence);
     app.delete("/incidences", controller.deleteIncidence);
 
+    return app;
 }
