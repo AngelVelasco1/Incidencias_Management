@@ -4,6 +4,6 @@ import { crudRoutes } from "./incidences.js";
 const app = Router();
 
 export const initRoutes = () => {
-    app.use("/", crudRoutes());
+    app.use("/use", crudRoutes());
     return app;
 }
