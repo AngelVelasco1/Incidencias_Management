@@ -52,31 +52,28 @@ passport.serializeUser(async (user, done) => {
         done(err, null)
     }
 });
-passport.deserializeUser(async (id, done) => {
+
+passport.deserializeUser(async (data, done) => {
     try {
-        const userId = new ObjectId(id.user._id)
-        const user = await users.findOne({ _id: userId });
-        if(!user) throw new Error("User not found");
+        const { user, token } = data;
+        const userId = new ObjectId(user._id);
+        const userDoc = await users.findOne({ _id: userId });
+        if (!userDoc) throw new Error("User not found");
         
-        done(null, user)
+        done(null, { user: userDoc, token });
     } catch(err) {
         console.error({ err: err.message });
-        done(err, null)
+        done(err, null);
     }
-})
+});
 
 export const setCookieToken = (req, res, next) => {
-    if(req.user) {
-        res.cookie("token", req.user);
-        console.log({ token: req });
-        next();
+    if (req.user && req.user.token) {
+        res.cookie("token", req.user.token);
     }
     next();
-}
+};
 
-export const logout = (req, res) => {
-    res.clearCookie("token");
-    res.sendStatus(200);
-}
+
 
 export default passport;

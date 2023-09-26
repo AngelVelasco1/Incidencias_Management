@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LoginView } from "./views/Login";
 import { DashboardCamperView } from "./views/DashboardCamper";
 
+
 export const Router = () => {
     return (
         <BrowserRouter>
