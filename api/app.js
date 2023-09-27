@@ -1,15 +1,14 @@
 import express from 'express';
 import session from 'express-session';
 import passport from "passport"
-import { CONFIG } from "./config/credentials.js";
-import { getRoles } from "./helpers/discordBot.js";
 import cors from 'cors';
-import { setCookieToken } from './helpers/passportDiscord.js';
+import cookieParser from 'cookie-parser';
 import loginStorage from './routes/login.js';
 import homeStorage from './routes/dashboardCamper.js';
+import { CONFIG } from "./config/credentials.js";
+import { getRoles } from "./helpers/discordBot.js";
+import { setCookieToken } from './helpers/passportDiscord.js';
 import { initRoutes } from './routes/router.js';
-import cookieParser from 'cookie-parser';
-
 
 const app = express();
 
@@ -31,12 +30,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 app.use("/api/login", loginStorage);
 app.use("/api/dashboard", setCookieToken, getRoles, homeStorage);
-app.use("/app", initRoutes);
-
+app.use("/app", initRoutes());
 
 export default app;
-

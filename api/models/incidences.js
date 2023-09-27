@@ -1,7 +1,6 @@
 import { getCollection } from "../db/conx.js";
 import { autoIncrement } from "../helpers/autoincrement.js";
 
-
 export class Incidences {
     id;
     id_user;

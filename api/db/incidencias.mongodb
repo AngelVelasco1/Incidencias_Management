@@ -3,18 +3,11 @@ use("incidencias");
 db.createCollection("counters");
 db.counters.insertMany([
     { counter: "incidencesId", sequenceValue: 0 },
-    { counter: "incidenceCategoryId", sequenceValue: 0 },
-    { counter: "statusId", sequenceValue: 0 },
-    { counter: "priorityId", sequenceValue: 0 },
-    { counter: "placeId", sequenceValue: 0 },
-    { counter: "areaId", sequenceValue: 0 },
-    { counter: "genderId", sequenceValue: 0 },
     { counter: "cityId", sequenceValue: 0 },
-    { counter: "countryId", sequenceValue: 0 },
     { counter: "addressId", sequenceValue: 0 }
 ]);
 const autoIncrement = (collection) => {
-    const sequenceDocument = db.counters.findOneAndUpdate(
+    const sequenceDocument =  db.counters.findOneAndUpdate(
        { counter: `${collection}Id`},
        { $inc: { sequenceValue: 1 }},
        { returnDocument: "after" }
@@ -29,7 +22,7 @@ db.createCollection("incidences", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_user", "id_place", "id_status", "id_priority", "id_category", "date", "description"],
+            required: ["id", "id_user", "equipment", "place", "area", "status", "priority", "category", "start_date", "end_date", "description"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -41,25 +34,43 @@ db.createCollection("incidences", {
                     bsonType: "int",
                     description: "id_user is required. Must be a int"
                 },
-                id_place: {
-                    bsonType: "int",
-                    description: "id_place is required. Must be a int"
+                equipment: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z ]+$",
+                    description: "equipment is required. Must be a string"
                 },
-                id_status: {
-                    bsonType: "int",
-                    description: "id_status is required. Must be a int"
+                place: {
+                    bsonType: "string",
+                    enum: ["Artemis", "Apolo", "Sputnik", "Bathrooms", "Hunters", "Corvus"],
+                    description: "place is required. Must be a string"
                 },
-                id_priority: {
-                    bsonType: "int",
-                    description: "id_priority is required. Must be a int"
+                area: {
+                    bsonType: "string",
+                    enum: ["Technical", "Social", "Recreation", "Administrative", "Human Resources", "Financial"],
+                    description: "area is required. Must be a string"
                 },
-                id_category: {
-                    bsonType: "int",
-                    description: "id_category is required. Must be a int"
+                status: {
+                    bsonType: "string",
+                    enum: ["New", "In Progress", "Resolved"],
+                    description: "status is required. Must be a string"
                 },
-                date: {
+                priority: {
+                    bsonType: "string",
+                    enum: ["Low", "Medium", "High"],
+                    description: "priority is required. Must be a string"
+                },
+                category: {
+                    bsonType: "string",
+                    enum: ["Hardware", "Software", "Services", "Other"],
+                    description: "category is required. Must be a string"
+                },
+                start_date: {
                     bsonType: "date",
-                    description: "date is required. Must be a date"
+                    description: "start_date is required. Must be a date"
+                },
+                end_date: {
+                    bsonType: "date",
+                    description: "end_date is required. Must be a date"
                 },
                 description: {
                     bsonType: "string",
@@ -74,249 +85,57 @@ db.incidences.insertMany([
     {
         id: autoIncrement("incidences"),
         id_user: 1,
-        id_place: 2,
-        id_status: 3,
-        id_priority: 2,
-        id_category: 1,
-        date: new Date(),
-        description: "Monitor is not working"
-    }
-])
-
-//? Category
-db.createCollection("incidenceCategory", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "descripcion"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                descripcion: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    enum: ["Hardware", "Software", "Services", "Other"],
-                    description: "descripcion is required. Must be a string"
-                }
-            }
-        }
-    }
-});
-db.incidenceCategory.insertMany([
-    {
-        id: autoIncrement("incidenceCategory"),
-        descripcion: "Hardware"
+        equipment: "Computer",
+        place: "Artemis",
+        area: "Technical",
+        status: "In Progress",
+        priority: "Low",
+        category: "Hardware",
+        start_date: new Date("2023-01-01"),
+        end_date: new Date("2023-01-09"),
+        description: "Computadora nueva"
     },
     {
-        id: autoIncrement("incidenceCategory"),
-        descripcion: "Software"
+        id: autoIncrement("incidences"),
+        id_user: 1,
+        equipment: "Laptop",
+        place: "Apolo",
+        area: "Technical",
+        status: "New",
+        priority: "Low",
+        category: "Software",
+        start_date: new Date("2023-01-05"),
+        end_date: new Date("2023-01-25"),
+        description: "Laptop nueva"
     },
     {
-        id: autoIncrement("incidenceCategory"),
-        descripcion: "Services"
+        id: autoIncrement("incidences"),
+        id_user: 1,
+        equipment: "Monitor",
+        place: "Bathrooms",
+        area: "Social",
+        status: "In Progress",
+        priority: "High",
+        category: "Services",
+        start_date: new Date("2023-04-01"),
+        end_date: new Date("2023-05-09"),
+        description: "Monitor nueva"
     },
     {
-        id: autoIncrement("incidenceCategory"),
-        descripcion: "Other"
-    }
-]);
-
-//? Status
-db.createCollection("status", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "descripcion"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                descripcion: {
-                    bsonType: "string",
-                    enum: ["New", "In Progress", "Resolved"],
-                    description: "descripcion is required. Must be a string with one of the values: New, In Progress, Resolved"
-                }
-            }
-        }
-    }
-})
-db.status.insertMany([
-    {
-        id: autoIncrement("status"),
-        descripcion: "New"
-    },
-    {
-        id: autoIncrement("status"),
-        descripcion: "In Progress"
-    },
-    {
-        id: autoIncrement("status"),
-        descripcion: "Resolved"
+        id: autoIncrement("incidences"),
+        id_user: 1,
+        equipment: "Printer",
+        place: "Hunters",
+        area: "Recreation",
+        status: "Resolved",
+        priority: "Medium",
+        category: "Other",
+        start_date: new Date("2023-02-01"),
+        end_date: new Date("2023-02-11"),
+        description: "Impresora nueva"
     }
 ]);
 
-//? Priority
-db.createCollection("priority", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "descripcion"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                descripcion: {
-                    bsonType: "string",
-                    enum: ["Low", "Medium", "High"],
-                    description: "descripcion is required. Must be a string with one of the values: Low, Medium, High"
-                }
-            }
-        }
-    }
-});
-db.priority.insertMany([
-    {
-        id: autoIncrement("priority"),
-        descripcion: "Low"
-    },
-    {
-        id: autoIncrement("priority"),
-        descripcion: "Medium"
-    },
-    {
-        id: autoIncrement("priority"),
-        descripcion: "High"
-    }
-])
-
-//? Place
-db.createCollection("place", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "id_area", "name", "capacity"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                id_area: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    enum: ["Apolo", "Artemis", "Sputnik", "Hunters", "Bathrooms", "Corvus" ],
-                    description: "name is required. Must be a string"
-                },
-                capacity: {
-                    bsonType: "int",
-                    description: "capacity is required. Must be a int"
-                }
-            }
-        }
-    }
-});
-db.place.insertMany([
-    {
-        id: autoIncrement("place"),
-        id_area: autoIncrement("place"),
-        name: "Apolo",
-        capacity: 25
-    },
-    {
-        id: autoIncrement("place"),
-        id_area: autoIncrement("place"),
-        name: "Artemis",
-        capacity: 25
-    },
-    {
-        id: autoIncrement("place"),
-        id_area: autoIncrement("place"),
-        name: "Sputnik",
-        capacity: 25
-    },
-    {
-        id: autoIncrement("place"),
-        id_area: autoIncrement("place"),
-        name: "Hunters",
-        capacity: 30
-    },
-    {
-        id: autoIncrement("place"),
-        id_area: autoIncrement("place"),
-        name: "Bathrooms",
-        capacity: 5
-    },
-    {
-        id: autoIncrement("place"),
-        id_area: autoIncrement("place"),
-        name: "Corvus",
-        capacity: 25
-    }
-])
-
-//? Area
-db.createCollection("area", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "name"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                }
-            }
-        }
-    }
-})
-db.area.insertMany([
-    {
-        id: autoIncrement("area"),
-        name: "Administrative"
-    },
-    {
-        id: autoIncrement("area"),
-        name: "Technical"
-    },
-    {
-        id: autoIncrement("area"),
-        name: "Human Resources"
-    },
-    {
-        id: autoIncrement("area"),
-        name: "Accounting"
-    },
-    {
-        id: autoIncrement("area"),
-        name: "Recreation"
-    }
-])
 
 //? User
 db.createCollection("user", {
@@ -324,7 +143,7 @@ db.createCollection("user", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["discord_id", "username", "email", "id_gender", "id_address"],
+            required: ["discord_id", "username", "email", "id_address"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -339,10 +158,6 @@ db.createCollection("user", {
                     bsonType: "string",
                     pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
                     description: "email is required. Must be a string"
-                },
-                id_gender: {
-                    bsonType: "int",
-                    description: "id_gender is required. Must be a int"
                 },
                 id_address: {
                     bsonType: "int",
@@ -374,13 +189,13 @@ db.user.insertMany([
         discord_id: "732340090168410113",
         username: "angel_vlk",
         email: "angel@example.com",
-        id_gender: 1,
         id_address: 2
     }
 ])
 
-//? Gender
-db.createCollection("gender", {
+
+//? City
+db.createCollection("city", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
@@ -393,45 +208,7 @@ db.createCollection("gender", {
                 id: {
                     bsonType: "int",
                 },
-                name: {
-                    bsonType: "string",
-                    enum: ["Male", "Female"],
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                }
-            }
-        }
-    }
-});
-db.gender.insertMany([
-    {
-        id: autoIncrement("gender"),
-        name: "Male"
-    },
-    {
-        id: autoIncrement("gender"),
-        name: "Female"
-    }
-])
-
-//? City
-db.createCollection("city", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "id_country", "name"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                id_country: {
-                    bsonType: "int",
-                    description: "id_country is required. Must be a int"
-                },
+                
                 name: {
                     bsonType: "string",
                     pattern: "^[a-zA-Z ]+$",
@@ -444,44 +221,18 @@ db.createCollection("city", {
 db.city.insertMany([
     {
         id: autoIncrement("city"),
-        id_country: 1,
         name: "Bogota"
     },
     {
         id: autoIncrement("city"),
-        id_country: 2,
         name: "Medellin"
     },
     {
         id: autoIncrement("city"),
-        id_country: 3,
         name: "Cali"
     }
 ])
 
-//? Country
-db.createCollection("country", {
-    validator: {
-        $jsonSchema: {
-            bsonType: "object",
-            additionalProperties: false,
-            required: ["id", "name"],
-            properties: {
-                _id: {
-                    bsonType: "objectId"
-                },
-                id: {
-                    bsonType: "int",
-                },
-                name: {
-                    bsonType: "string",
-                    pattern: "^[a-zA-Z ]+$",
-                    description: "name is required. Must be a string"
-                }
-            }
-        }
-    }
-})
 
 //? Address 
 db.createCollection("address", {
@@ -489,7 +240,7 @@ db.createCollection("address", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_country", "street", "number"],
+            required: ["id", "id_city", "street", "number"],
             properties: {
                 _id: {
                     bsonType: "objectId"
@@ -497,7 +248,7 @@ db.createCollection("address", {
                 id: {
                     bsonType: "int",
                 },
-                id_country: {
+                id_city: {
                     bsonType: "int",
                 },
                 street: {
@@ -516,13 +267,13 @@ db.createCollection("address", {
 db.address.insertMany([
     {
         id: autoIncrement("address"),
-        id_country: 1,
+        id_city: 1,
         street: "Calle 123",
         number: 123
     },
     {
         id: autoIncrement("address"),
-        id_country: 2,
+        id_city: 2,
         street: "Calle 456",
         number: 456
     }
