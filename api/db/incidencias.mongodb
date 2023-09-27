@@ -2,17 +2,17 @@
 use("incidencias");
 db.createCollection("counters");
 db.counters.insertMany([
-    { counter: "incidencesId", sequenceValue: 0 },
-    { counter: "cityId", sequenceValue: 0 },
-    { counter: "addressId", sequenceValue: 0 }
+    { counter: "incidencesId", sequence_value: 0 },
+    { counter: "cityId", sequence_value: 0 },
+    { counter: "addressId", sequence_value: 0 }
 ]);
 const autoIncrement = (collection) => {
     const sequenceDocument =  db.counters.findOneAndUpdate(
        { counter: `${collection}Id`},
-       { $inc: { sequenceValue: 1 }},
+       { $inc: { sequence_value: 1 }},
        { returnDocument: "after" }
     )
-    return sequenceDocument.sequenceValue;
+    return sequenceDocument.sequence_value;
 }
 
 use("incidencias");
@@ -22,7 +22,7 @@ db.createCollection("incidences", {
         $jsonSchema: {
             bsonType: "object",
             additionalProperties: false,
-            required: ["id", "id_user", "equipment", "place", "area", "status", "priority", "category", "start_date", "end_date", "description"],
+            required: ["id_user", "equipment", "place", "area", "status", "priority", "category", "start_date", "end_date", "description"],
             properties: {
                 _id: {
                     bsonType: "objectId"

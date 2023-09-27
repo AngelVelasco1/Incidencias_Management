@@ -4,12 +4,15 @@ import { autoIncrement } from "../helpers/autoincrement.js";
 export class Incidences {
     id;
     id_user;
-    id_place;
-    id_status;
-    id_priority;
-    id_category;
-    date; 
-    description;
+    equipment;
+    place;
+    area;
+    status;
+    priority;
+    category;
+    start_date;
+    end_date;
+    description
     constructor(){};
 
     async conx() {
@@ -40,7 +43,8 @@ export class Incidences {
             const newIncidence = {
                 id,
                 ...data,
-                date: new Date(data.date)
+                "start_date": new Date(data.start_date),
+                "end_date": new Date(data.end_date)
             }
             const result = await db.insertOne(newIncidence);
             return result
