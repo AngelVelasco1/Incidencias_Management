@@ -23,7 +23,7 @@ export const addIncidence = async(req, res, next) => {
 
 export const updateIncidence = async(req, res, next) => {
     try {
-        const id = req.query.id
+        const {id} = req.query;
         const data = req.body;
         const incidence = await putService(id, data);
         res.status(200).json(incidence);
@@ -35,7 +35,7 @@ export const updateIncidence = async(req, res, next) => {
 
 export const deleteIncidence = async(req, res, next) => {
     try {   
-        const id = req.query.id;
+        const {id} = req.query;
         const incidence = await deleteService(id);
         res.status(200).json(incidence);
         next();

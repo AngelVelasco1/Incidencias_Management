@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cors({
     origin: `http://${CONFIG.hostname}:${CONFIG.frontend_port}`,
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
     optionsSuccessStatus: 200,
 }));

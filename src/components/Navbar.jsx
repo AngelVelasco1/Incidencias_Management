@@ -4,8 +4,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
 
-
-  { name: 'Home', href: '#', current: true },
+  { name: 'Home', href: 'http://127.1.1.2:5084/dashboardCamper', current: true },
+  { name: 'Incidences', href: 'http://127.1.1.2:5084/dashboardCamper/incidences', current: false },
 ]
 
 function classNames(...classes) {

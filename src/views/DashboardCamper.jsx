@@ -1,4 +1,4 @@
-import { DashboardCamper } from "../components/DashboardCamper";
+import { DashboardCamper } from "../components/CamperDashboard";
 
 export const DashboardCamperView = () => {
     return (

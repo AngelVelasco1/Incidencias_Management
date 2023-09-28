@@ -1,6 +1,6 @@
 import { Navbar } from "./Navbar.jsx"
 import React from 'react'
-import { CardCamper } from "./CardCamper.jsx"
+import { CamperForm } from "./addIncidences.jsx"
 
 
 export const DashboardCamper = () => {
@@ -14,7 +14,7 @@ export const DashboardCamper = () => {
       </header>
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          {<CardCamper />}
+          {<CamperForm />}
         </div>
       </main>
     </>
