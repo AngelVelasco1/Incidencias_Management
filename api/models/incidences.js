@@ -26,11 +26,12 @@ export class Incidences {
 
 
 
-    async getIncidences() {
+    async getIncidences(id) {
         try {
             const db = await this.conx();
-            const incidences = await db.find({}).toArray();
-            return incidences;
+
+            if(!id) return await db.find({}).toArray();
+            return await db.findOne({ "id": parseInt(id) });
         } catch(err) {
             console.log({err: err.message});
         }
@@ -59,7 +60,8 @@ export class Incidences {
             const db = await this.conx();
             const updatedIncidence = {
                 ...data,
-                date: new Date(data.date)
+                "start_date": new Date(data.start_date),
+                "end_date": new Date(data.end_date)
             }
             const result = await db.updateOne({ "id": parseInt(id) }, { $set: updatedIncidence })
             return result

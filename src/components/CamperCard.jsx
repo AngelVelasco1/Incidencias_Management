@@ -29,7 +29,7 @@ export const CamperCard = ({incidence}) => {
                     <p>End Date: {incidence.end_date}</p>
                     <p>Description: {incidence.description}</p>
                     <button onClick={() => deleteIncidence(incidence.id)} type="submit">Delete</button>
-                    <button onClick={() => navigate(`/dashboardCamper/edit/${incidence.id}`)} type="submit">Update</button>
+                    <button onClick={() => navigate(`/dashboardCamper/edit/?id=${incidence.id}`)} type="submit">Update</button>
                 </div>
             </CardBody>
         </Card>

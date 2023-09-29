@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { addIncidenceRequest, getIncidencesRequest, deleteIncidenceRequest } from '../services/incidences.api';
+import { getIncidencesRequest, getIncidenceRequest, addIncidenceRequest, updateIncidenceRequest, deleteIncidenceRequest } from '../services/incidences.api';
 
 export const IncidencesContext = createContext();
 export const useIncidences = () => {
@@ -16,14 +16,24 @@ export const IncidencesProvider = ({ children }) => {
         setIncidences(response.data);
     }
 
+    const getIncidence = async(id) => {
+        const response = await getIncidenceRequest(id);
+        return response.data
+    }
+
     const addIncidence = async (incidence) => {
         const response = await addIncidenceRequest(incidence);
         setIncidences([...incidences, response.data]);
     }
 
+    const updateIncidence = async (id, incidence) => {
+        const response = await updateIncidenceRequest(id, incidence);
+        console.log(response);
+    }
+
     const deleteIncidence = async (id) => {
         try {
-            const response = await deleteIncidenceRequest(id);
+             await deleteIncidenceRequest(id);
             setIncidences(incidences.filter(incidence => incidence.id !== id))
             
         } catch (err) {
@@ -31,7 +41,7 @@ export const IncidencesProvider = ({ children }) => {
         }
     }
 
-    return <IncidencesContext.Provider value={{ incidences, loadIncidences, addIncidence, deleteIncidence }}>
+    return <IncidencesContext.Provider value={{ incidences, loadIncidences, getIncidence, addIncidence, updateIncidence, deleteIncidence }}>
         {children}
     </IncidencesContext.Provider>
 }
