@@ -1,15 +1,11 @@
 import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
-import { deleteIncidenceRequest } from "../services/incidences.api";
+import { useIncidences } from "../context/IncidencesContext";
+import { useNavigate } from "react-router-dom";
 
 export const CamperCard = ({incidence}) => {
-    const handleDelete = async (id) => {
-        try {
-            const response = await deleteIncidenceRequest(id);
-            console.log(response);
-        } catch(err) {
-            console.log({err: err.message});
-        }
-    }
+    const { deleteIncidence } = useIncidences()
+    const navigate = useNavigate()
+    
     return (
         <Card className="py-4 w-5/6 m-auto">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -32,8 +28,8 @@ export const CamperCard = ({incidence}) => {
                     <p>Start Date: {incidence.start_date}</p>
                     <p>End Date: {incidence.end_date}</p>
                     <p>Description: {incidence.description}</p>
-                    <button onClick={() => handleDelete(incidence.id)} type="submit">Delete</button>
-                    <button onClick={() => console.log(incidence.id)} type="submit">Update</button>
+                    <button onClick={() => deleteIncidence(incidence.id)} type="submit">Delete</button>
+                    <button onClick={() => navigate(`/dashboardCamper/edit/${incidence.id}`)} type="submit">Update</button>
                 </div>
             </CardBody>
         </Card>

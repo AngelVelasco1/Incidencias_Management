@@ -1,8 +1,9 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { addIncidenceRequest } from "../services/incidences.api";
+import { useIncidences } from "../context/IncidencesContext";
 
 export const CamperForm = () => {
+  const { addIncidence } = useIncidences();
   return (
     <Formik initialValues={{
       idUse: 1,
@@ -16,12 +17,9 @@ export const CamperForm = () => {
       startDat: "",
       endDat: ""
     }}
-      onSubmit={async (values, actions) => {
+      onSubmit={async (values) => {
         try {
-          const response = await addIncidenceRequest(values);
-          console.log(response);
-          actions.resetForm();
-
+          addIncidence(values)
         } catch (err) {
           console.error({ error: err.message });
         }
@@ -30,26 +28,25 @@ export const CamperForm = () => {
       {({ handleChange, handleSubmit, isSubmitting }) => (
         <Form className="capitalize m-auto" onSubmit={handleSubmit}>
           <label className="flex flex-col">equipment</label>
-          <input className="bg-gray-300" type="text" name="equipmen" onChange={handleChange}></input>
+          <input className="bg-gray-300" type="text" name="equipmen" required onChange={handleChange}></input>
 
           <label className="flex flex-col">place</label>
-
           <input type="radio" id="Artemis" name="plac" value="Artemis" onChange={handleChange}></input>
           <label htmlFor="Artemis">Artemis</label>
 
-          <input type="radio" id="Apolo" name="place" value="Apolo" onChange={handleChange}></input>
+          <input type="radio" id="Apolo" name="plac" value="Apolo" onChange={handleChange}></input>
           <label htmlFor="Apolo">Apolo</label>
 
-          <input type="radio" id="Sputnik" name="place" value="Sputnik" onChange={handleChange}></input>
+          <input type="radio" id="Sputnik" name="plac" value="Sputnik" onChange={handleChange}></input>
           <label htmlFor="Sputnik">Sputnik</label>
 
-          <input type="radio" id="Bathrooms" name="place" value="Bathrooms" onChange={handleChange}></input>
+          <input type="radio" id="Bathrooms" name="plac" value="Bathrooms" onChange={handleChange}></input>
           <label htmlFor="Bathrooms">Bathrooms</label>
 
-          <input type="radio" id="Hunters" name="place" value="Hunters" onChange={handleChange}></input>
+          <input type="radio" id="Hunters" name="plac" value="Hunters" onChange={handleChange}></input>
           <label htmlFor="Hunters">Hunters</label>
 
-          <input type="radio" id="Corvus" name="place" value="Corvus" onChange={handleChange}></input>
+          <input type="radio" id="Corvus" name="plac" value="Corvus" onChange={handleChange}></input>
           <label htmlFor="Corvus">Corvus</label>
 
           <label className="flex flex-col">area</label>
@@ -106,13 +103,14 @@ export const CamperForm = () => {
 
 
           <label className="flex flex-col">description</label>
-          <textarea className="bg-gray-300" name="desc" placeholder="Incident Description" rows="4" onChange={handleChange}></textarea>
+          <textarea className="bg-gray-300" name="desc" placeholder="Incident Description" rows="4" required onChange={handleChange}></textarea>
 
           <label className="flex flex-col">start date</label>
-          <input className="bg-gray-300" type="date" name="startDat" onChange={handleChange}></input>
+          <input className="bg-gray-300" type="date" name="startDat" required onChange={handleChange}></input>
 
           <label className="flex flex-col">end date</label>
-          <input className="bg-gray-300" type="date" name="endDat" onChange={handleChange}></input>
+          <input className="bg-gray-300" type="date" name="endDat" required onChange={handleChange}></input>
+          <br/>
 
           <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Adding..." : "Add"}</button>
         </Form>

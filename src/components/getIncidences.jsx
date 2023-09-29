@@ -1,21 +1,17 @@
 import React from 'react'
 import { Navbar } from './Navbar'
-import { useEffect, useState } from 'react';
-import { getIncidencesRequest } from '../services/incidences.api';
+import { useEffect } from 'react';
 import { CamperCard } from './CamperCard';
+import { useIncidences } from '../context/IncidencesContext';
 
 export const IncidencesCamper = () => {
-  const [incidences, setIncidences] = useState([]);
-  useEffect(() => {
-    async function loadIncidences() {
-      const response = await getIncidencesRequest();
-      setIncidences(response.data);
-    }
+  const {incidences, loadIncidences} = useIncidences()
+  useEffect(() => {   
     loadIncidences()
   }, []);
 
   function renderIncidences() {
-    if(incidences.length === 0) return <h2 className="text-2xl ">No Incidences</h2>
+    if(incidences.length === 0) return <h2 className="text-2xl font-bold">No Incidences</h2>
     return incidences.map((incidence) => (
       <CamperCard incidence={incidence} key={incidence.id}/>
     ))
