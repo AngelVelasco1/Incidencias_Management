@@ -3,15 +3,13 @@ import ReactDOM from 'react-dom/client';
 import { Router } from "./App";
 import { NextUIProvider } from "@nextui-org/react";
 import './styles.css'
-import { AuthProvider } from './context/auth';
 
+//? Color pallete:  https://colorhunt.co/palette/0000004e4feb068fffeeeeee 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <NextUIProvider>
-      <AuthProvider>
         <Router />
-      </AuthProvider>
     </NextUIProvider>
   </React.StrictMode>,
 )

@@ -12,12 +12,7 @@ export const CamperCard = ({incidence}) => {
                 <p className="text-xl uppercase font-bold">Incident</p>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
-                <Image
-                    alt="Card background"
-                    className="object-cover rounded-xl"
-                    src="/images/hero-card-complete.jpeg"
-                    width={270}
-                />
+           
                 <div>
                     <p>Equipment: {incidence.equipment}</p>
                     <p>Place: {incidence.place}</p>
@@ -29,7 +24,7 @@ export const CamperCard = ({incidence}) => {
                     <p>End Date: {incidence.end_date}</p>
                     <p>Description: {incidence.description}</p>
                     <button onClick={() => deleteIncidence(incidence.id)} type="submit">Delete</button>
-                    <button onClick={() => navigate(`/dashboardCamper/edit/?id=${incidence.id}`)} type="submit">Update</button>
+                    <button onClick={() => navigate(`/edit?id=${incidence.id}`)} type="submit">Update</button>
                 </div>
             </CardBody>
         </Card>

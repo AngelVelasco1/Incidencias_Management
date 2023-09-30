@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { useIncidences } from "../context/IncidencesContext";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CamperForm = () => {
+  const navigate = useNavigate();
   const { addIncidence, getIncidence, updateIncidence } = useIncidences();
   const [incidence, setIncidence] = useState({
     idUse: "",
@@ -47,7 +49,8 @@ export const CamperForm = () => {
       onSubmit={async (values, actions) => {
 
         if (queryId) {
-          await updateIncidence(queryId, values)
+          await updateIncidence(queryId, values);
+          navigate("/incidences")
         } else {
           await addIncidence(values)
         }
@@ -143,7 +146,7 @@ export const CamperForm = () => {
           <input className="bg-gray-300" type="date" name="endDat" value={values.endDat.split("T")[0]}  required onChange={handleChange}></input>
           <br />
 
-          <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Adding..." : "Add"}</button>
+          <button type="submit">{(queryId) ? "Update" : "Add"}</button>
         </Form>
       )}
     </Formik>
