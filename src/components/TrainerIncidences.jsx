@@ -1,10 +1,10 @@
 import React from 'react'
 import { Navbar } from './Navbar'
 import { useEffect } from 'react';
-import { CamperCard } from './CamperCard';
+import { TrainerCard } from './TrainerCard';
 import { useIncidences } from '../context/IncidencesContext';
 
-export const IncidencesCamper = () => {
+export const TrainerIncidences = () => {
   const {incidences, loadIncidences} = useIncidences()
   useEffect(() => {   
     loadIncidences()
@@ -13,7 +13,7 @@ export const IncidencesCamper = () => {
   function renderIncidences() {
     if(incidences.length === 0) return <h2 className="text-2xl font-bold">No Incidences</h2>
     return incidences.map((incidence) => (
-      <CamperCard incidence={incidence} key={incidence.id}/>
+      <TrainerCard incidence={incidence} key={incidence.id}/>
     ))
   }
 

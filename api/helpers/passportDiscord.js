@@ -20,7 +20,7 @@ passport.use(new Strategy({
         const user = await users.findOne({ discord_id: profile.id });
         if (user) {
             const token = jwt.sign({ discord_id: user.discord_id }, private_key, { expiresIn: '3h' });
-            return done(null, { user, token });
+            return done(null, {user, token});
         }
         else {
             const newUser = {
@@ -36,7 +36,7 @@ passport.use(new Strategy({
                 info: newUser,
             }
             const token = jwt.sign({ discord_id: newUserInfo.info.discord_id }, private_key, { expiresIn: '3h' });
-            return done(null, { user: newUserInfo, token });
+            return done(null, {user: newUserInfo, token});
         }
 
     }
@@ -45,39 +45,32 @@ passport.use(new Strategy({
         return done(err, null)
     }
 }));
-passport.serializeUser(async (user, done) => {
-    try {
+passport.serializeUser((user, done) => {
         done(null, user)
-    } catch (err) {
-        console.error({ err: err.message });
-        done(err, null)
-    }
 });
 passport.deserializeUser(async (data, done) => {
-    try {
-        const { user, token } = data;
-        const userId = new ObjectId(user._id);
-        const userDoc = await users.findOne({ _id: userId });
-        if (!userDoc) throw new Error("User not found");
-
-        done(null, { user: userDoc, token });
-    } catch (err) {
-        console.error({ err: err.message });
-        done(err, null);
+    const { user, token } = data;
+    const userId = new ObjectId(user._id);
+    const userDoc = await users.findOne({ _id: userId });
+    
+    if (!userDoc) {
+      return done(new Error("User not found"), null);
     }
+  
+    done(null, { user: userDoc, token });
 });
 
 export const setCookieTokenAndRoles = async (req, res, next) => {
     if (req.user && req.user.token) {
+        res.cookie("token", req.user.token);
         try {
-            res.cookie("token", req.user.token);
-            const roles = getRoles(req.session.roles);
+            const roles = req.session.roles;
             console.log(roles);
+            req.user.roles = roles; 
         } catch (error) {
             console.error("Error al obtener roles:", error);
         }
     }
     next();
 };
-
 export default passport;

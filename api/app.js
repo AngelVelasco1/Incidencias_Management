@@ -16,6 +16,7 @@ app.use(cors({
     credentials: true,
     optionsSuccessStatus: 200,
 }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(session({
     secret: CONFIG.secret_session,
@@ -23,7 +24,6 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());

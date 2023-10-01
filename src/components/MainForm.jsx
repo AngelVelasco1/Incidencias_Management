@@ -4,7 +4,7 @@ import { useIncidences } from "../context/IncidencesContext";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export const CamperForm = () => {
+export const MainForm = () => {
   const navigate = useNavigate();
   const { addIncidence, getIncidence, updateIncidence } = useIncidences();
   const [incidence, setIncidence] = useState({
