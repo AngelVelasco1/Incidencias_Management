@@ -3,7 +3,6 @@ import { LoginView } from "./views/Login";
 import { DashboardCamperView } from "./views/DashboardCamper";
 import { IncidencesCamper } from "./components/getIncidences";
 import { IncidencesProvider } from "./context/IncidencesContext";
-import { Protected } from "./Protected";
 import { NotFound } from "./components/NotFound";
 
 export const Router = () => {
