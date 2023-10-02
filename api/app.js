@@ -13,13 +13,15 @@ app.use(cors({
     origin: `http://${CONFIG.hostname}:${CONFIG.frontend_port}`,
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
-    optionsSuccessStatus: 200,
 }));
 app.use(express.json());
 app.use(session({
     secret: CONFIG.secret_session,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: false
+    }
 }));
 
 app.use(cookieParser());

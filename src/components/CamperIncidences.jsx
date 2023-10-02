@@ -20,7 +20,6 @@ export const CamperIncidences = () => {
   return (
     <>
       <Navbar />
-      <h1 className="text-3xl font-bold">All Incidences</h1>
       {renderIncidences()}
     </>
   )

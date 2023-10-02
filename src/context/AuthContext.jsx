@@ -1,41 +1,44 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+
 
 const AuthContext = createContext();
+
 export const useAuth = () => {
     const context = useContext(AuthContext);
-    if (!context) throw new Error()
+    if (!context) throw new Error("useAuth must be used within AuthContext")
     return context;
 }
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const { errors, setErrors } = useState([]);
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         function validateAuth() {
-            const cookies = Cookies.get();
-            if (cookies) {
-                setIsAuthenticated(true);
+            const cookie = decodeURIComponent(document.cookie);
+            const session = cookie.split("=")[0];  
+
+            if (!session) {
+                setIsAuthenticated(false);
+                setLoading(false);
             } else {
-                setIsAuthenticated(false)
-            };
+                setIsAuthenticated(true);
+                setLoading(false);
+            }
+
         }
-        validateAuth()
+
+        validateAuth();
     }, []);
 
     const logOut = () => {
-        const Navigate = useNavigate();
-        Cookies.remove()
-        setIsAuthenticated(false)
-        Navigate("/")
+        document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        window.location.href = "http://127.1.1.2:5084/";
+        setIsAuthenticated(false);
     }
 
-
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, errors, logOut }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, logOut }}>
             {children}
         </AuthContext.Provider>
     )

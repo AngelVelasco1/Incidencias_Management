@@ -1,23 +1,35 @@
-import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from './context/Auth';
-
+import { useAuth } from './context/AuthContext';
 
 export const Protected = () => {
+  const { isAuthenticated, loading } = useAuth();
+  if(loading) {
+    return <h1>Loading...</h1>
+  }
 
-  const { isAuthenticated } = useAuth();
-
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
     return (
       <>
         <Outlet />
-        <Navigate to={"/dashboardCamper"} />
+        <Navigate to="/" />
       </>
-    )
+    );
   } else {
-    <>
-      <Outlet />
-      <Navigate to={"/"} />
-    </> 
-  }
+
+    if(location.pathname != "/") {
+      return (
+        <>
+          <Outlet />
+        </>
+      );
+    }else {
+      return (
+        <>
+          <Outlet />
+          <Navigate to="/dashboardCamper" />
+        </>
+      );
+    }
+    
+}
 }

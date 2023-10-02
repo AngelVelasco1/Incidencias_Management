@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
+
 
 const navigation = [
   { name: 'Home', href: 'http://127.1.1.2:5084/dashboardCamper', current: true },
@@ -14,13 +16,14 @@ function classNames(...classes) {
 
 export const Navbar = () => {
   const [currentPage, setCurrentPage] = useState('Home');
+  const { logOut } = useAuth();
 
   useEffect(() => {
     const focusPage = () => {
       const currentPath = window.location.pathname.split('/').pop();
       if (currentPath === 'dashboardCamper') {
         setCurrentPage('Home');
-      } else if (currentPath === 'incidences') {
+      } else if (currentPath === 'camperIncidences') {
         setCurrentPage('Incidences');
       }
     }
@@ -112,7 +115,7 @@ export const Navbar = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={logOut()}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out
