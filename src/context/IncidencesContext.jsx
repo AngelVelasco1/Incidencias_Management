@@ -28,7 +28,6 @@ export const IncidencesProvider = ({ children }) => {
 
     const updateIncidence = async (id, incidence) => {
         const response = await updateIncidenceRequest(id, incidence);
-        console.log(response);
     }
 
     const deleteIncidence = async (id) => {

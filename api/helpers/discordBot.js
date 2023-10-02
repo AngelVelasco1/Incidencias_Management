@@ -12,9 +12,9 @@ export const getRoles = (req, res, next) => {
     const roles = user.roles.cache;
     const roleNames = roles.map(role => role.name);
 
+    req.session.roles = roleNames.join(', ');
     console.log(`Los roles del usuario "${req.user.username}" en el servidor "${guild.name}" son: ${roleNames.join(', ')}`);
   });
 
   client.login(CONFIG.bot_token); 
-  next();
 }

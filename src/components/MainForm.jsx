@@ -45,12 +45,12 @@ export const MainForm = () => {
     loadIncidence();
   }, [])
   return (
-    <Formik  initialValues={incidence} enableReinitialize={true}
+    <Formik initialValues={incidence} enableReinitialize={true}
       onSubmit={async (values, actions) => {
 
         if (queryId) {
           await updateIncidence(queryId, values);
-          navigate("/incidences")
+          navigate("/camperIncidences")
         } else {
           await addIncidence(values)
         }
@@ -66,7 +66,7 @@ export const MainForm = () => {
             <input className="bg-gray-300" type="text" name="equipmen" value={values.equipmen} required onChange={handleChange}></input>
 
             <label className="flex flex-col">place</label>
-            
+
             <input type="radio" id="Artemis" name="plac" value="Artemis" checked={values.plac === "Artemis"} onChange={handleChange}></input>
             <label htmlFor="Artemis">Artemis</label>
 
@@ -149,10 +149,10 @@ export const MainForm = () => {
             <br />
 
             <div className="text-center"> {/* Agregamos un div de centrado */}
-      <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">
-        {queryId ? "Update" : "Add"}
-      </button>
-    </div>          </div>
+              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">
+                {queryId ? "Update" : "Add"}
+              </button>
+            </div>          </div>
 
         </Form>
       )}
