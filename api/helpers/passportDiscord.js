@@ -4,7 +4,6 @@ import { Strategy } from "passport-discord";
 import { CONFIG } from "../config/credentials.js";
 import { getConx } from "../db/conx.js";
 import { ObjectId } from "mongodb";
-import { getRoles } from "./discordBot.js";
 
 const db = await getConx();
 const users = db.collection("user");
@@ -20,15 +19,17 @@ passport.use(new Strategy({
         const user = await users.findOne({ discord_id: profile.id });
         if (user) {
             const token = jwt.sign({ discord_id: user.discord_id }, private_key, { expiresIn: '3h' });
+            console.log(user);
+            console.log(token);
             return done(null, {user, token});
-        }
+        } 
         else {
             const newUser = {
                 discord_id: profile.id,
                 username: profile.username,
-                email: profile.email,
+                email: profile.email,    
                 id_gender: 1,
-                id_address: 1
+                id_address: 1         
             };
             const { insertedId } = await users.insertOne(newUser);
             const newUserInfo = {
@@ -36,8 +37,8 @@ passport.use(new Strategy({
                 info: newUser,
             }
             const token = jwt.sign({ discord_id: newUserInfo.info.discord_id }, private_key, { expiresIn: '3h' });
-            return done(null, {user: newUserInfo, token});
-        }
+            return done(null, { user: newUserInfo, token });
+        }   
 
     }
     catch (err) {
@@ -45,32 +46,35 @@ passport.use(new Strategy({
         return done(err, null)
     }
 }));
-passport.serializeUser((user, done) => {
+passport.serializeUser(async (user, done) => {
+    try {
         done(null, user)
-});
-passport.deserializeUser(async (data, done) => {
-    const { user, token } = data;
-    const userId = new ObjectId(user._id);
-    const userDoc = await users.findOne({ _id: userId });
-    
-    if (!userDoc) {
-      return done(new Error("User not found"), null);
+    } catch(err) {  
+        console.error({ err: err.message });
+        done(err, null)
     }
-  
-    done(null, { user: userDoc, token });
 });
 
-export const setCookieTokenAndRoles = async (req, res, next) => {
+passport.deserializeUser(async (data, done) => {
+    try {
+        const { user, token } = data;
+        const userId = new ObjectId(user._id);
+        const userDoc = await users.findOne({ _id: userId });
+        if (!userDoc) throw new Error("User not found");
+    
+        done(null, { user: userDoc, token });
+    } catch(err) {
+        console.error({ err: err.message });
+        done(err, null);
+    }
+});
+
+export const setCookieToken = (req, res, next) => {
     if (req.user && req.user.token) {
         res.cookie("token", req.user.token);
-        try {
-            const roles = req.session.roles;
-            console.log(roles);
-            req.user.roles = roles; 
-        } catch (error) {
-            console.error("Error al obtener roles:", error);
-        }
     }
     next();
 };
+
 export default passport;
+

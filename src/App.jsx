@@ -17,14 +17,11 @@ export const Router = () => {
                     <Route path="/camperIncidences" element={<CamperIncidences />}></Route>
                     <Route path="/edit" element={<CamperDashboardView />}></Route>
                     <Route path="*" element={<NotFound />}></Route>
-                </Routes>
-                <Routes>
-                    <Route path="/" element={<LoginView />} />
                     <Route path="/dashboardTrainer" element={<TrainerDashboardView />}></Route>
                     <Route path="/trainerIncidences" element={<TrainerIncidences />}></Route>
                     <Route path="/edit" element={<TrainerDashboardView />}></Route>
-                    <Route path="*" element={<NotFound />}></Route>
                 </Routes>
+                
             </BrowserRouter>
         </IncidencesProvider >
 

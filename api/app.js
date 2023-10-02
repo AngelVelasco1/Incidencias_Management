@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import loginStorage from './routes/login.js';
 import { CONFIG } from "./config/credentials.js";
 import { initRoutes } from './routes/router.js';
-import { setCookieTokenAndRoles } from './helpers/passportDiscord.js';
+import { setCookieToken } from './helpers/passportDiscord.js';
 
 const app = express();
 
@@ -16,7 +16,6 @@ app.use(cors({
     credentials: true,
     optionsSuccessStatus: 200,
 }));
-app.use(cookieParser());
 app.use(express.json());
 app.use(session({
     secret: CONFIG.secret_session,
@@ -24,11 +23,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api/login", setCookieTokenAndRoles, loginStorage);
+app.use("/api/login", setCookieToken, loginStorage);
 app.use("/app", initRoutes());
 
 export default app;

@@ -4,15 +4,15 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
 
 const navigation = [
-  { name: 'Home', href: 'http://127.1.1.2:5084/dashboardCamper', current: true },
-  { name: 'Incidences', href: 'http://127.1.1.2:5084/camperIncidences', current: false },
+  { name: 'Home', href: 'http://127.1.1.2:5084/dashboardTrainer', current: true },
+  { name: 'Incidences', href: 'http://127.1.1.2:5084/trainerIncidences', current: false },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Navbar = () => {
+export const NavbarTrainer = () => {
   const [currentPage, setCurrentPage] = useState('Home');
 
   useEffect(() => {

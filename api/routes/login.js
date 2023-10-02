@@ -1,9 +1,8 @@
 import { Router } from "express";
-import passport, { setCookieTokenAndRoles } from "../helpers/passportDiscord.js";
+import passport from "../helpers/passportDiscord.js";
 import { CONFIG } from "../config/credentials.js";
 
 const loginStorage = Router();
-
 
 loginStorage.get("/auth", passport.authenticate('discord'));
 loginStorage.get("/auth/redirect", passport.authenticate('discord', {
