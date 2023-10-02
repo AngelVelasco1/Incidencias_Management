@@ -8,7 +8,7 @@ export const MainForm = () => {
   const navigate = useNavigate();
   const { addIncidence, getIncidence, updateIncidence } = useIncidences();
   const [incidence, setIncidence] = useState({
-    idUse: "",
+    idUse: 1,
     equipmen: "",
     plac: "",
     are: "",

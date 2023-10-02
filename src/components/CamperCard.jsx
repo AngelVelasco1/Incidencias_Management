@@ -12,38 +12,38 @@ export const CamperCard = ({ incidence }) => {
 
                 <div className=" grid grid-rows-3 grid-flow-col ">
                     <Card className="flex bg-red-200 justify-center items-center">
-                        <CardBody className="flex flex ">
+                        <CardBody className="flex flex border-none">
                             <p>                    <p>{incidence.equipment}</p></p>
                         </CardBody>
                     </Card>
 
                     <Card>
-                        <CardBody>
+                        <CardBody className="flex flex border-none">
                             <p>                    <p>{incidence.description}</p></p>
                         </CardBody>
                     </Card>
 
                     <Card>
-                        <CardBody>
+                        <CardBody className="flex flex border-none">
                             <p>                    <p>{incidence.area}</p></p>
                         </CardBody>
                     </Card>
 
                     <Card>
-                        <CardBody>
+                        <CardBody className="flex flex border-none">
                             <p>                    <p>{incidence.status}</p></p>
                         </CardBody>
                     </Card>
 
                     <Card>
-                        <CardBody>
+                        <CardBody className="flex flex border-none">
                             <p>                    <p>{incidence.priority}</p></p>
                         </CardBody>
                     </Card>
 
 
                     <Card>
-                        <CardBody>
+                        <CardBody className="flex flex border-none">
                             <p>                    <p>{incidence.place}</p></p>
                         </CardBody>
                     </Card>

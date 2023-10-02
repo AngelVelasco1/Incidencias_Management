@@ -17,4 +17,5 @@ export const getRoles = (req, res, next) => {
   });
 
   client.login(CONFIG.bot_token); 
+  next();
 }

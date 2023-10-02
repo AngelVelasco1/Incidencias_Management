@@ -21,7 +21,7 @@ passport.use(new Strategy({
         if (user) {
             const token = jwt.sign({ discord_id: user.discord_id }, private_key, { expiresIn: '3h' });
             profile = {user, token}
-            return done(null, profile);
+             done(null, profile);
         } 
         else {
             const newUser = {
@@ -38,7 +38,7 @@ passport.use(new Strategy({
             }
             const token = jwt.sign({ discord_id: newUserInfo.info.discord_id }, private_key, { expiresIn: '3h' });
             profile = { user: newUserInfo, token }
-            return done(null, profile);
+             done(null, profile);
         }   
 
     }
@@ -47,9 +47,9 @@ passport.use(new Strategy({
         return done(err, null)
     }
 }));
-passport.serializeUser(async (user, done) => {
+passport.serializeUser(async (profile, done) => {
     try {
-        return done(null, user)
+         done(null, profile)
     } catch(err) {  
         console.error({ err: err.message });
         done(err, null)
@@ -58,12 +58,12 @@ passport.serializeUser(async (user, done) => {
 
 passport.deserializeUser(async (data, done) => {
     try {
-        const { user, token } = data;
-        const userId = new ObjectId(user._id);
-        const userDoc = await users.findOne({ _id: userId });
+        const { profile, token } = data;
+        const profileId = new ObjectId(profile._id);
+        const profileDoc = await users.findOne({ _id: profileId });
         if (!userDoc) throw new Error("User not found");
     
-        return done(null, { user: userDoc, token });
+         done(null, { profile: profileDoc, token });
     } catch(err) {
         console.error({ err: err.message });
         done(err, null);
