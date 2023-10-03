@@ -51,7 +51,7 @@ export const Navbar = () => {
               <div className="flex flex-1 items-center justify-center sm:items-center sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="w-14 rounded-full"
+                    className="w-20 rounded-full"
                     src="./src/assets/logo.png"
                     alt="Your Company"
                   />
@@ -106,7 +106,7 @@ export const Navbar = () => {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(active ? 'bg-slate-200' : '', 'block px-4 py-2 text-sm font-bold text-slate-800')}
                           >
                             Your Profile
                           </a>
@@ -115,10 +115,11 @@ export const Navbar = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={logOut()}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            onClick={logOut}
+                            href="#"
+                            className={classNames(active ? 'bg-gray-200' : '', 'block px-4 py-2 text-sm font-bold text-blue-500	')}
                           >
-                            Sign out
+                            Log Out
                           </a>
                         )}
                       </Menu.Item>

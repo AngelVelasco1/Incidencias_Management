@@ -13,23 +13,60 @@
 
   color-scheme: light dark;
   font-synthesis: none;
-  background-image: url('./src/assets/login_bg.png'); /* Ruta a tu imagen de fondo */
-  background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
-  background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
-  background-position:center ;
+ 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
 
-#form {
+#login_container {
+  background-image: url('./src/assets/login_bg.png');
+  background-size: 100vw;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+#incident_card {
+  width: 400px;
+  height: 350px;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+#incident_card::before {
+  content: "";
+  position: absolute;
+  height: 540px;
+  width: 540px;
+  background-image: conic-gradient(#067effe5 20deg, transparent 120deg);
+  animation: lighting 3s linear infinite;
+}
+
+
+@keyframes lighting {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#incident_card::after {
+  content: "";
+  position: absolute;
+  background-color: white;
+  height: 340px;
+  width: 390px;
+  border-radius: 10px;
 
 }
-#form {
 
- 
-}
 
 #form__article {
   cursor: pointer;
