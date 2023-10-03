@@ -7,6 +7,7 @@ import { Protected } from "./Protected";
 import { NotFound } from "./components/NotFound";
 import { AuthProvider } from "./context/AuthContext";
 
+
 export const Router = () => {
     return (
         <AuthProvider>

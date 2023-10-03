@@ -43,7 +43,7 @@
   position: absolute;
   height: 540px;
   width: 540px;
-  background-image: conic-gradient(#067effe5 20deg, transparent 120deg);
+  background-image: conic-gradient(#067eff 20deg, transparent 120deg);
   animation: lighting 3s linear infinite;
 }
 
