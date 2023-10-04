@@ -27,7 +27,10 @@
   background-attachment: fixed;
 }
 
-
+input[type="radio"] {
+width: 15px; /* Ancho deseado */
+  height: 15px; /* Alto deseado */
+  padding: 5px; /* Espacio interno (relleno) deseado */}
 #incident_card {
   width: 400px;
   height: 350px;

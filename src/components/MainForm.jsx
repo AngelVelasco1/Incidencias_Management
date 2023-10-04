@@ -4,10 +4,14 @@ import { RadioGroup, Radio } from "@nextui-org/react";
 import { useIncidences } from "../context/IncidencesContext";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {Chip} from "@nextui-org/react";
+
 
 export const MainForm = () => {
-  const navigate = useNavigate();
   const { addIncidence, getIncidence, updateIncidence } = useIncidences();
+  const [isIncidenceSent, setIsIncidenceSent] = useState(false);
+  const navigate = useNavigate();
+
   const [incidence, setIncidence] = useState({
     idUse: 1,
     equipmen: "",
@@ -45,6 +49,7 @@ export const MainForm = () => {
     };
     loadIncidence();
   }, []);
+  
   return (
     <Formik
       initialValues={incidence}
@@ -52,9 +57,10 @@ export const MainForm = () => {
       onSubmit={async (values, actions) => {
         if (queryId) {
           await updateIncidence(queryId, values);
-          navigate("/camperIncidences");
+         navigate("/camperIncidences") ;
         } else {
           await addIncidence(values);
+          setIsIncidenceSent(true); 
         }
         actions.resetForm();
       }}
@@ -74,7 +80,7 @@ export const MainForm = () => {
 
             <label className="flex flex-col">equipment</label>
             <input
-              className="bg-gray-300 rounded-md py-1"
+              className="bg-gray-300 rounded-md py-1 flex flex-col"
               type="text"
               name="equipmen"
               value={values.equipmen}
@@ -82,196 +88,75 @@ export const MainForm = () => {
               onChange={handleChange}
             ></input>
 
-            <RadioGroup label="Place" name="plac" orientation="horizontal">
-              <Radio
-                onChange={handleChange}
-                id="Artemis"
-                value="Artemis"
-                checked={values.plac === "Artemis"}
-              >
-                Artemis
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Apolo"
-                value="Apolo"
-                checked={values.plac === "Apolo"}
-              >
-                Apolo
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Sputnik"
-                value="Sputnik"
-                checked={values.plac === "Sputnik"}
-              >
-                Sputnik
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Hunters"
-                value="Hunters"
-                checked={values.plac === "Hunters"}
-              >
-                Hunters
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Corvus"
-                value="Corvus"
-                checked={values.plac === "Corvus"}
-              >
-                Corvus
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Bathrooms"
-                value="Bathrooms"
-                checked={values.plac === "Bathrooms"}
-              >
-                Bathrooms
-              </Radio>
-            </RadioGroup>
+            <input className="p-6" type="radio" id="Artemis" name="plac" value="Artemis" checked={values.plac === "Artemis"} onChange={handleChange}></input>
+            <label htmlFor="Artemis">Artemis</label>
 
-            <RadioGroup label="Area" name="are" orientation="horizontal">
-              <Radio
-                onChange={handleChange}
-                id="Technical"
-                value="Technical"
-                checked={values.are === "Technical"}
-              >
-                Technical
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Social"
-                value="Social"
-                checked={values.are === "Social"}
-              >
-                Social
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Recreation"
-                value="Recreation"
-                checked={values.are === "Recreation"}
-              >
-                Recreation
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Administrative"
-                value="Administrative"
-                checked={values.are === "Administrative"}
-              >
-                Administrative
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="HR"
-                value="Human Resources"
-                checked={values.are === "Human Resources"}
-              >
-                Human Resources
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Financial"
-                value="Financial"
-                checked={values.are === "Financial"}
-              >
-                Financial
-              </Radio>
-            </RadioGroup>
+            <input type="radio" id="Apolo" name="plac" value="Apolo" checked={values.plac === "Apolo"} onChange={handleChange}></input>
+            <label htmlFor="Apolo">Apolo</label>
 
-            <RadioGroup label="Status" name="statu" orientation="horizontal">
-              <Radio
-                onChange={handleChange}
-                id="New"
-                value="New"
-                checked={values.statu === "New"}
-              >
-                New
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="in_progress"
-                value="in_progress"
-                checked={values.statu === "In progress"}
-              >
-                In progress
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Resolved"
-                value="Resolved"
-                checked={values.statu === "Resolved"}
-              >
-                Resolved
-              </Radio>
-            </RadioGroup>
+            <input type="radio" id="Sputnik" name="plac" value="Sputnik" checked={values.plac === "Sputnik"} onChange={handleChange}></input>
+            <label htmlFor="Sputnik">Sputnik</label>
 
-            <RadioGroup label="Priority" name="priorit" orientation="horizontal">
-              <Radio
-                onChange={handleChange}
-                id="Low"
-                value="Low"
-                checked={values.priorit === "Low"}
-              >
-                Low
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Medium"
-                value="Medium"
-                checked={values.priorit === "Medium"}
-              >
-                Apolo
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="High"
-                value="High"
-                checked={values.priorit === "High"}
-              >
-                High
-              </Radio>
-            </RadioGroup>
+            <input type="radio" checked={values.plac === "Bathrooms"} id="Bathrooms" name="plac" value="Bathrooms" onChange={handleChange}></input>
+            <label htmlFor="Bathrooms">Bathrooms</label>
 
-            <RadioGroup label="Category" name="categor" orientation="horizontal">
-              <Radio
-                onChange={handleChange}
-                id="Hardware"
-                value="Hardware"
-                checked={values.categor === "Hardware"}
-              >
-                Hardware
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Software"
-                value="Software"
-                checked={values.categor === "Software"}
-              >
-                Software
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Services"
-                value="Services"
-                checked={values.categor === "Services"}
-              >
-                Services
-              </Radio>
-              <Radio
-                onChange={handleChange}
-                id="Other"
-                value="Other"
-                checked={values.categor === "Other"}
-              >
-                Other
-              </Radio>
-            </RadioGroup>
+            <input type="radio" checked={values.plac === "Hunters"} id="Hunters" name="plac" value="Hunters" onChange={handleChange}></input>
+            <label htmlFor="Hunters">Hunters</label>
+
+            <input type="radio" checked={values.plac === "Corvus"} id="Corvus" name="plac" value="Corvus" onChange={handleChange}></input>
+            <label htmlFor="Corvus">Corvus</label>
+
+            <label className="flex flex-col">area</label>
+            <input type="radio" checked={values.are === "Technical"} id="Technical" name="are" value="Technical" onChange={handleChange} />
+            <label htmlFor="Technical">Technical</label>
+
+            <input type="radio" checked={values.are === "Social"} id="Social" name="are" value="Social" onChange={handleChange} />
+            <label htmlFor="Social">Social</label>
+
+            <input type="radio" checked={values.are === "Recreation"} id="Recreation" name="are" value="Recreation" onChange={handleChange} />
+            <label htmlFor="Recreation">Recreation</label>
+
+            <input type="radio" checked={values.are === "Administrative"} id="Administrative" name="are" value="Administrative" onChange={handleChange} />
+            <label htmlFor="Administrative">Administrative</label>
+
+            <input type="radio" checked={values.are === "Human Resources"} id="HumanResources" name="are" value="Human Resources" onChange={handleChange} />
+            <label htmlFor="HumanResources">HR</label>
+
+            <input type="radio" checked={values.are === "Financial"} id="Financial" name="are" value="Financial" onChange={handleChange} />
+            <label htmlFor="Financial">Financial</label>
+
+            <label className="flex flex-col">status</label>
+            <input type="radio" checked={values.statu === "New"} id="New" name="statu" value="New" onChange={handleChange} />
+            <label htmlFor="New">New</label>
+
+            <input type="radio" checked={values.statu === "In Progress"} id="InProgress" name="statu" value="In Progress" onChange={handleChange} />
+            <label htmlFor="InProgress">In Progress</label>
+
+            <input type="radio" checked={values.statu === "Resolved"} id="Resolved" name="statu" value="Resolved" onChange={handleChange} />
+            <label htmlFor="Resolved">Resolved</label>
+
+            <label className="flex flex-col">priority</label>
+            <input type="radio" checked={values.priorit === "Low"} id="Low" name="priorit" value="Low" onChange={handleChange} />
+            <label htmlFor="Low">Low</label>
+
+            <input type="radio" checked={values.priorit === "Medium"} id="Medium" name="priorit" value="Medium" onChange={handleChange} />
+            <label htmlFor="Medium">Medium</label>
+
+            <input type="radio" checked={values.priorit === "High"} id="High" name="priorit" value="High" onChange={handleChange} />
+            <label htmlFor="High">High</label>
+
+            <label className="flex flex-col">category</label>
+            <input type="radio" checked={values.categor === "Hardware"} id="Hardware" name="categor" value="Hardware" onChange={handleChange} />
+            <label htmlFor="Hardware">Hardware</label>
+
+            <input type="radio" checked={values.categor === "Software"} id="Software" name="categor" value="Software" onChange={handleChange} />
+            <label htmlFor="Software">Software</label>
+
+            <input type="radio" checked={values.categor === "Services"} id="Services" name="categor" value="Services" onChange={handleChange} />
+            <label htmlFor="Services">Services</label>
+
+            <input type="radio" checked={values.categor === "Other"} id="Other" name="categor " value="Other" onChange={handleChange} />
+            <label htmlFor="Other">Other</label>
 
 
             <label className="flex flex-col">description</label>
@@ -305,10 +190,16 @@ export const MainForm = () => {
               onChange={handleChange}
             ></input>
             <br />
-
+ {isIncidenceSent && (
+        <Chip
+          
+          variant="faded"
+          color="success"
+        >
+          Incidence added
+        </Chip>
+      )}
             <div className="text-center">
-              {" "}
-              {/* Agregamos un div de centrado */}
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded"
