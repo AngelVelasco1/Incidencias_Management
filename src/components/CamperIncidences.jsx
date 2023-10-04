@@ -9,15 +9,19 @@ import { Listbox, ListboxItem } from '@nextui-org/react';
 
 export const CamperIncidences = () => {
   const { incidences, loadIncidences } = useIncidences();
-  const [selected, setSelected] = useState([
-    
-  ]);
+  const [selected, setSelected] = useState([]);
+  let newSelected = [];
   useEffect(() => {
     loadIncidences();
   }, []);
 
+  useEffect(()=>{
+    console.log(selected);
+  },[selected])
+
   function handleFilterChange(filter) {
-    setSelected(filter);
+    //setSelected(filter);
+    newSelected = filter;
   }
 
   function renderIncidences() {
@@ -28,10 +32,10 @@ export const CamperIncidences = () => {
     }
 
     const filteredIncidences = incidences.filter((incidence) => {
-      if (selected.length === 0) {
+      if (newSelected.length === 0) {
         return true; // Mostrar todas las incidencias si no hay ningún filtro seleccionado
       } else {
-        return selected.includes(incidence.plac);
+        return newSelected.includes(incidence.plac);
       }
     });
 
