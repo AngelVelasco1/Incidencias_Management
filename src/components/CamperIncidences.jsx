@@ -3,7 +3,9 @@ import { Navbar } from './Navbar'
 import { useEffect, useState } from 'react';
 import { useIncidences } from '../context/IncidencesContext';
 import { CamperCard } from './CamperCard';
-import { Listbox, ListboxItem, Checkbox } from "@nextui-org/react";
+import { Listbox, ListboxItem } from '@nextui-org/react';
+
+
 
 export const CamperIncidences = () => {
   const { incidences, loadIncidences } = useIncidences();
@@ -41,42 +43,44 @@ export const CamperIncidences = () => {
   return (
     <>
       <Navbar />
+
       <div>
-        {/* Tu código para mostrar el título y el selector */}
-        {/* ... */}
+  
         <Listbox
-          aria-label="Filter incidences"
-          variant="flat"
+          className="w-1/4 m-auto mt-8"
+          aria-label="Incidences"
+          color="primary"
+          variant="shadow"
           disallowEmptySelection
           selectionMode="multiple"
           selectedKeys={selected}
+          aria-orientation='horizontal'
           onSelectionChange={handleFilterChange}
         >
-          <ListboxItem className="text-white" name="plac" key="All">
+          <ListboxItem className="text-slate-600" name="plac" key="All">
             All
           </ListboxItem>
-          <ListboxItem className="text-white" name="plac" key="Apolo">
+          <ListboxItem className="text-slate-600" name="plac" key="Apolo">
             Apolo
           </ListboxItem>
-          <ListboxItem className="text-white" name="plac" key="Artemis">
+          <ListboxItem className="text-slate-600" name="plac" key="Artemis">
             Artemis
           </ListboxItem>
-          <ListboxItem className="text-white" name="plac" key="Sputnik">
+          <ListboxItem className="text-slate-600" name="plac" key="Sputnik">
             Sputnik
           </ListboxItem>
-          <ListboxItem className="text-white" name="plac" key="Corvus">
+          <ListboxItem className="text-slate-600" name="plac" key="Corvus">
             Corvus
           </ListboxItem>
-          <ListboxItem className="text-white" name="plac" key="Hunters">
+          <ListboxItem className="text-slate-600" name="plac" key="Hunters">
             Hunters
           </ListboxItem>
-          <ListboxItem className="text-white" name="plac" key="Bathrooms">
+          <ListboxItem className="text-slate-600" name="plac" key="Bathrooms">
             Bathrooms
           </ListboxItem>
         </Listbox>
       </div>
-
-      <div className="grid grid-cols-3 gap-4 m-0 p-0 my-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 m-0 p-0 my-8">
         {renderIncidences()}
       </div>
     </>

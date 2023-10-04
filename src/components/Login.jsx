@@ -27,7 +27,7 @@ export const Login = () => {
 
   return (
     <div className="w-screen h-screen flex items-center justify-center" id="login_container">
-    <div className="max-w-fit min-h-fit flex flex-col justify-center m-auto bg-slate-900 items-center px-6 py-16 lg:px-44 shadow-3xl rounded-2xl">
+    <div className="w-4/5 h-1/2  lg:max-w-fit min-h-fit flex flex-col justify-center m-auto bg-slate-900 items-center px-6 py-16 lg:px-44 shadow-3xl rounded-2xl">
       <div className="m-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto w-48 rounded-xl"
