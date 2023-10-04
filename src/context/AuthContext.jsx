@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const logOut = () => {
         document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        window.location.href = "http://127.1.1.2:5084/";
+        window.location.href = "http://192.168.129.72:5084/";
         setIsAuthenticated(false);
     }
 
