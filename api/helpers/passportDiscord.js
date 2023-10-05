@@ -39,7 +39,6 @@ passport.use(new Strategy({
                 discord_id: profile.id,
                 username: profile.username,
                 email: profile.email,
-                id_gender: 1,
                 id_address: 1
             };
             const { insertedId } = await users.insertOne(newUser);
