@@ -6,8 +6,8 @@ import { useAuth } from '../context/AuthContext'
 
 
 const navigation = [
-  { name: 'Home', href: 'http://192.168.129.72:5084/dashboardCamper', current: true },
-  { name: 'Incidences', href: 'http://192.168.129.72:5084/camperIncidences', current: false },
+  { name: 'Home', href: '/dashboardCamper', current: true },
+  { name: 'Incidences', href: '/camperIncidences', current: false },
 ]
 
 function classNames(...classes) {

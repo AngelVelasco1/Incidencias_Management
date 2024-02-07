@@ -1,7 +1,6 @@
-import React from "react";
-import { Button, Image } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { easeInOut, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ export const Login = () => {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1.5, ease: "easeInOut", type: "spring" }}
-        className="w-4/5 h-1/2  lg:max-w-fit min-h-fit flex flex-col justify-center m-auto bg-slate-900 items-center px-6 py-16 lg:px-44 shadow-3xl rounded-2xl"
+        className="w-4/5  lg:max-w-fit h-4/5 flex flex-col justify-center m-auto bg-slate-900 items-center  mt-12 mb-12 py-16 lg:px-44 shadow-3xl rounded-2xl"
       >
         <div className="m-auto sm:w-full sm:max-w-sm">
           <img

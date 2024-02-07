@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongodb";
 import passport from "passport";
 import { Strategy } from "passport-discord";
 import { CONFIG } from "../config/credentials.js";
@@ -25,7 +24,7 @@ passport.use(new Strategy({
     clientID: CONFIG.client_id,
     clientSecret: CONFIG.client_secret,
     callbackURL: CONFIG.redirect_uri,
-    scope: ["identify", "guilds", "email", "guilds.members.read", "bot", "applications.commands"],
+    scope: ["identify", "email"],
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const user = await users.findOne({ discord_id: profile.id });
